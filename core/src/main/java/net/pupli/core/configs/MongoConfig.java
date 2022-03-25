@@ -38,4 +38,9 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     public Collection getMappingBasePackages() {
         return Collections.singleton("net.pupli");
     }
+
+    @Override
+    protected boolean autoIndexCreation() {
+        return true;
+    }
 }

@@ -1,8 +1,9 @@
 package net.pupli.core.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.index.*;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.redis.core.index.GeoIndexed;
 
 @Document(collection = "items")
 public class MonitoringItem {
