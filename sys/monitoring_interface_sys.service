@@ -1,0 +1,13 @@
+[Unit]
+Description=monitoring v5 sys
+After=syslog.target network.target rabbitmq-server.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/opt/monitoringv5/sys/run.sh
+SuccessExitStatus=143
+
+[Install]
+Alias=monitoringv5_interface_sys
+WantedBy=multi-user.target

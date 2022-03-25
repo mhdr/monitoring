@@ -1,0 +1,13 @@
+[Unit]
+Description=monitoring v5 gen
+After=syslog.target network.target rabbitmq-server.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/opt/monitoringv5/gen/run.sh
+SuccessExitStatus=143
+
+[Install]
+Alias=monitoringv5_interface_gen
+WantedBy=multi-user.target
