@@ -1,7 +1,6 @@
 package net.pupli.core;
 
 import net.pupli.core.libs.DB;
-import net.pupli.core.models.MonitoringItem;
 import net.pupli.core.repositories.MonitoringItemRepository;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;

@@ -29,6 +29,26 @@ public class MonitoringItem {
     private int itemType;
     private BooleanItemProperties booleanProperties;
     private RealItemProperties realProperties;
+    public MonitoringItem(int itemId, String itemName, int itemType, RealItemProperties realProperties) {
+        this();
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.itemType = itemType;
+        this.realProperties = realProperties;
+    }
+    public MonitoringItem(int itemId, String itemName, int itemType, BooleanItemProperties booleanProperties) {
+        this();
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.itemType = itemType;
+        this.booleanProperties = booleanProperties;
+    }
+    public MonitoringItem(int itemId, String itemName, int itemType) {
+        this();
+        this.itemId = itemId;
+        this.itemName = itemName;
+        this.itemType = itemType;
+    }
 
     public MonitoringItem() {
         this.itemId = -1;
@@ -135,6 +155,16 @@ public class MonitoringItem {
         private String onText;
         private String offText;
 
+        public BooleanItemProperties() {
+
+        }
+
+        public BooleanItemProperties(String onText, String offText) {
+            this.onText = onText;
+            this.offText = offText;
+        }
+
+
         public String getOnText() {
             return onText;
         }
@@ -146,6 +176,13 @@ public class MonitoringItem {
 
     public static class RealItemProperties {
         private String unitName;
+
+        public RealItemProperties() {
+        }
+
+        public RealItemProperties(String unitName) {
+            this.unitName = unitName;
+        }
 
         public String getUnitName() {
             return unitName;
