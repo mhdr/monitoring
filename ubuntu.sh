@@ -5,12 +5,11 @@
 
 #################################################################### general ################################################################################
 
-mkdir -p /root/git
-mkdir -p /root/.monitoring
+mkdir -p /root/.monitoringv5
 
 #################################################################### required ###############################################################################
 
-apt install -y dos2unix build-essential curl
+apt install -y dos2unix build-essential curl zip unzip
 
 #################################################################### config ubuntu ##########################################################################
 
@@ -87,6 +86,12 @@ systemctl start mongod.service
 curl -fsSL https://deb.nodesource.com/setup_lts.x | -E bash -
 apt-get install -y nodejs
 
+#################################################################### yarn ###################################################################################
+
+curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt update && sudo apt install yarn
+
 #################################################################### dotnet #################################################################################
 
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -101,6 +106,20 @@ apt-get install -y dotnet-sdk-6.0
 
 apt install -y python3-dev python3-all python3-pip python3-venv
 
+#################################################################### sdkman #################################################################################
+
+curl -s "https://get.sdkman.io" | bash
+source "/root/.sdkman/bin/sdkman-init.sh"
+
+#################################################################### java #################################################################################
+
+sdk install java 18-open
+sdk default java 18-open
+
+#################################################################### gradle ###############################################################################
+
+sdk install gradle 7.4.2
+sdk default gradle 7.4.2
 
 #################################################################### rabbitmq ##############################################################################
 
@@ -162,7 +181,6 @@ sleep 1s
 FLUSH PRIVILEGES;
 sleep 1s
 exit
-
 
 #################################################################### redis ##############################################################################
 
