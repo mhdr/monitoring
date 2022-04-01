@@ -86,12 +86,6 @@ systemctl start mongod.service
 curl -fsSL https://deb.nodesource.com/setup_lts.x | -E bash -
 apt-get install -y nodejs
 
-#################################################################### yarn ###################################################################################
-
-curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
-echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-sudo apt update && sudo apt install yarn
-
 #################################################################### dotnet #################################################################################
 
 wget https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
@@ -113,8 +107,8 @@ source "/root/.sdkman/bin/sdkman-init.sh"
 
 #################################################################### java #################################################################################
 
-sdk install java 18-open
-sdk default java 18-open
+sdk install java 17.0.2-open
+sdk default java 17.0.2-open
 
 #################################################################### gradle ###############################################################################
 
