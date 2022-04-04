@@ -35,22 +35,22 @@ while True:
     try:
         time.sleep(2)
 
-        v1 = {"Id": 10, "Value": str(value1.next())}
-        v2 = {"Id": 11, "Value": str(value2.next())}
-        v3 = {"Id": 12, "Value": str(value3.next())}
-        v4 = {"Id": 13, "Value": str(value4.next())}
-        v5 = {"Id": 14, "Value": str(value5.next())}
-        v6 = {"Id": 15, "Value": str(value6.next())}
-        v7 = {"Id": 16, "Value": str(value7.next())}
-        v8 = {"Id": 17, "Value": str(value8.next())}
-        v9 = {"Id": 18, "Value": str(value9.next())}
-        v10 = {"Id": 19, "Value": str(value10.next())}
-        v11 = {"Id": 20, "Value": str(value11.next())}
-        v12 = {"Id": 21, "Value": str(value12.next())}
-        v13 = {"Id": 22, "Value": str(value13.next())}
-        v14 = {"Id": 23, "Value": str(value14.next())}
-        v15 = {"Id": 24, "Value": str(value15.next())}
-        v16 = {"Id": 25, "Value": str(value16.next())}
+        v1 = {"id": 10, "value": str(value1.next())}
+        v2 = {"id": 11, "value": str(value2.next())}
+        v3 = {"id": 12, "value": str(value3.next())}
+        v4 = {"id": 13, "value": str(value4.next())}
+        v5 = {"id": 14, "value": str(value5.next())}
+        v6 = {"id": 15, "value": str(value6.next())}
+        v7 = {"id": 16, "value": str(value7.next())}
+        v8 = {"id": 17, "value": str(value8.next())}
+        v9 = {"id": 18, "value": str(value9.next())}
+        v10 = {"id": 19, "value": str(value10.next())}
+        v11 = {"id": 20, "value": str(value11.next())}
+        v12 = {"id": 21, "value": str(value12.next())}
+        v13 = {"id": 22, "value": str(value13.next())}
+        v14 = {"id": 23, "value": str(value14.next())}
+        v15 = {"id": 24, "value": str(value15.next())}
+        v16 = {"id": 25, "value": str(value16.next())}
 
         valueListReal = []
         valueListBoolean = []
@@ -80,10 +80,10 @@ while True:
 
         now = datetime.datetime.now().isoformat()
 
-        ReadValueDtoReal = {"Credential": "66ad9345-9e09-4629-aed2-e8684a9cf31d", "Time": now,
-                            "DataList": valueListReal}
-        ReadValueDtoBoolean = {"Credential": "66ad9345-9e09-4629-aed2-e8684a9cf31d", "Time": now,
-                               "DataList": valueListBoolean}
+        ReadValueDtoReal = {"credential": "66ad9345-9e09-4629-aed2-e8684a9cf31d", "time": now,
+                            "dataList": valueListReal}
+        ReadValueDtoBoolean = {"credential": "66ad9345-9e09-4629-aed2-e8684a9cf31d", "time": now,
+                               "dataList": valueListBoolean}
 
         outputReal = json.dumps(ReadValueDtoReal)
         outputBoolean = json.dumps(ReadValueDtoBoolean)

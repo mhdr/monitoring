@@ -25,11 +25,11 @@ while True:
         disk = psutil.disk_usage('/').percent
         sys_uptime = uptime.uptime()
 
-        value1 = {"Id": 1, "Value": str(cpu)}
-        value2 = {"Id": 2, "Value": str(ram)}
-        value3 = {"Id": 3, "Value": str(swap)}
-        value4 = {"Id": 4, "Value": str(disk)}
-        value5 = {"Id": 5, "Value": str(sys_uptime)}
+        value1 = {"id": 1, "value": str(cpu)}
+        value2 = {"id": 2, "value": str(ram)}
+        value3 = {"id": 3, "value": str(swap)}
+        value4 = {"id": 4, "value": str(disk)}
+        value5 = {"id": 5, "value": str(sys_uptime)}
 
         dataList = []
 
@@ -41,7 +41,7 @@ while True:
 
         now = datetime.datetime.now().isoformat()
 
-        ReadValueDto = {"Credential": "779e43d0-7e31-49e5-864f-26234abf3909", "Time": now, "DataList": dataList}
+        ReadValueDto = {"credential": "779e43d0-7e31-49e5-864f-26234abf3909", "time": now, "dataList": dataList}
 
         output = json.dumps(ReadValueDto)
 
