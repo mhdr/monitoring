@@ -1,7 +1,7 @@
-package net.pupli.interface_manager.configs;
+package net.pupli.core.configs;
 
-import net.pupli.interface_manager.libs.ConfigFile;
-import net.pupli.interface_manager.services.RabbitMessageListener;
+import net.pupli.core.libs.ConfigFile;
+import net.pupli.core.services.RabbitMessageListener;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -26,25 +26,9 @@ public class RabbitConfiguration {
         return connectionFactory;
     }
 
-    @Bean("connectionFactoryCore")
-    public CachingConnectionFactory connectionFactoryCore() {
-        // configure to connect with credential
-        ConfigFile configFile = new ConfigFile();
-        CachingConnectionFactory connectionFactory =
-                new CachingConnectionFactory(configFile.getRabbitmqCoreHost());
-        connectionFactory.setUsername(configFile.getRabbitmqCoreUserName());
-        connectionFactory.setPassword(configFile.getRabbitmqCorePassword());
-        return connectionFactory;
-    }
-
     @Bean("amqpAdmin")
     public RabbitAdmin amqpAdmin() {
         return new RabbitAdmin(connectionFactory());
-    }
-
-    @Bean("amqpAdminCore")
-    public RabbitAdmin amqpAdminCore() {
-        return new RabbitAdmin(connectionFactoryCore());
     }
 
     @Bean("rabbitTemplate")
@@ -61,30 +45,16 @@ public class RabbitConfiguration {
         return template;
     }
 
-    @Bean("rabbitTemplateCore")
-    public RabbitTemplate rabbitTemplateCore() {
-        RabbitTemplate template = new RabbitTemplate(connectionFactoryCore());
-        // configure template to use retry policy
-        RetryTemplate retryTemplate = new RetryTemplate();
-        ExponentialBackOffPolicy backOffPolicy = new ExponentialBackOffPolicy();
-        backOffPolicy.setInitialInterval(500);
-        backOffPolicy.setMultiplier(10.0);
-        backOffPolicy.setMaxInterval(10000);
-        retryTemplate.setBackOffPolicy(backOffPolicy);
-        template.setRetryTemplate(retryTemplate);
-        return template;
-    }
-
-    @Bean("MonitoringV5_Queue1")
-    public Queue MonitoringV5_Queue1() {
+    @Bean("MonitoringV5_Queue3")
+    public Queue MonitoringV5_Queue3() {
         // declare queue1
-        return new Queue("MonitoringV5_Queue1");
+        return new Queue("MonitoringV5_Queue3");
     }
 
     @Bean("MonitoringV5_Queue2")
-    public Queue MonitoringV5_Queue2() {
+    public Queue MonitoringV5_Queue4() {
         // declare queue2
-        return new Queue("MonitoringV5_Queue2");
+        return new Queue("MonitoringV5_Queue4");
     }
 
     @Bean
@@ -95,8 +65,7 @@ public class RabbitConfiguration {
         container.setConcurrentConsumers(8);
         container.setMaxConcurrentConsumers(32);
         // listen to queues
-        // container.setQueueNames("MonitoringV5_Queue1", "MonitoringV5_Queue2");
-        container.setQueues(MonitoringV5_Queue1(),MonitoringV5_Queue2());
+        container.setQueues(MonitoringV5_Queue3(),MonitoringV5_Queue4());
         container.setMessageListener(new RabbitMessageListener());
         return container;
     }

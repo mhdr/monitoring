@@ -15,6 +15,9 @@ public class ConfigFile {
     private String rabbitmqHost;
     private String rabbitmqUserName;
     private String rabbitmqPassword;
+    private String rabbitmqCoreHost;
+    private String rabbitmqCoreUserName;
+    private String rabbitmqCorePassword;
 
     public ConfigFile() {
         try {
@@ -31,11 +34,27 @@ public class ConfigFile {
                 rabbitmqUserName = prop.getProperty("rabbitmq.username");
                 rabbitmqPassword = prop.getProperty("rabbitmq.password");
 
+                rabbitmqCoreHost = prop.getProperty("rabbitmq.core.host");
+                rabbitmqCoreUserName = prop.getProperty("rabbitmq.core.username");
+                rabbitmqCorePassword = prop.getProperty("rabbitmq.core.password");
+
                 fis.close();
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
+    }
+
+    public String getRabbitmqCoreHost() {
+        return rabbitmqCoreHost;
+    }
+
+    public String getRabbitmqCoreUserName() {
+        return rabbitmqCoreUserName;
+    }
+
+    public String getRabbitmqCorePassword() {
+        return rabbitmqCorePassword;
     }
 
     public String getRabbitmqHost() {

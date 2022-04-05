@@ -32,6 +32,22 @@ public class ConfigFile {
     private String mongodbUserName;
     private String mongodbPassword;
 
+    public String getRabbitmqHost() {
+        return rabbitmqHost;
+    }
+
+    public String getRabbitmqUserName() {
+        return rabbitmqUserName;
+    }
+
+    public String getRabbitmqPassword() {
+        return rabbitmqPassword;
+    }
+
+    private String rabbitmqHost;
+    private String rabbitmqUserName;
+    private String rabbitmqPassword;
+
     public ConfigFile() {
         try {
             Path currentPath = Paths.get(System.getProperty("user.home"));
@@ -46,6 +62,10 @@ public class ConfigFile {
                 mongodbHost = prop.getProperty("mongodb.host");
                 mongodbUserName = prop.getProperty("mongodb.username");
                 mongodbPassword = prop.getProperty("mongodb.password");
+
+                rabbitmqHost = prop.getProperty("rabbitmq.host");
+                rabbitmqUserName = prop.getProperty("rabbitmq.username");
+                rabbitmqPassword = prop.getProperty("rabbitmq.password");
 
                 fis.close();
             }
