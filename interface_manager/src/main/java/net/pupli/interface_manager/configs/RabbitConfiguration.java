@@ -2,6 +2,7 @@ package net.pupli.interface_manager.configs;
 
 import net.pupli.interface_manager.libs.ConfigFile;
 import net.pupli.interface_manager.services.RabbitMessageListener;
+import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
@@ -92,10 +93,11 @@ public class RabbitConfiguration {
         // configure listener to receive messages from queues
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
-        container.setConcurrentConsumers(8);
-        container.setMaxConcurrentConsumers(32);
+        container.setConcurrentConsumers(1);
+        container.setMaxConcurrentConsumers(1);
+        // qos = 0
+        container.setAcknowledgeMode(AcknowledgeMode.NONE);
         // listen to queues
-        // container.setQueueNames("MonitoringV5_Queue1", "MonitoringV5_Queue2");
         container.setQueues(MonitoringV5_Queue1(),MonitoringV5_Queue2());
         container.setMessageListener(new RabbitMessageListener());
         return container;

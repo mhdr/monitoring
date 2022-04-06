@@ -1,17 +1,26 @@
-package net.pupli.core.models.redis;
+package net.pupli.core.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
-@RedisHash("RawBooleanData")
+@Document(collection = "raw_boolean_data")
 public class RawBooleanData {
     @Id
     private String id;
     private String itemId;
     private Boolean value;
-    private Date time;
+    private LocalDateTime time;
+
+    public RawBooleanData() {
+    }
+
+    public RawBooleanData(String itemId, Boolean value, LocalDateTime time) {
+        this.itemId = itemId;
+        this.value = value;
+        this.time = time;
+    }
 
     public Boolean getValue() {
         return value;
@@ -37,11 +46,11 @@ public class RawBooleanData {
         this.itemId = itemId;
     }
 
-    public Date getTime() {
+    public LocalDateTime getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(LocalDateTime time) {
         this.time = time;
     }
 }

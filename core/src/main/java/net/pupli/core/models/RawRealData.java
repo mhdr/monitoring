@@ -1,24 +1,22 @@
-package net.pupli.core.models.redis;
+package net.pupli.core.models;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
-@RedisHash("RawRealData")
+@Document(collection = "raw_real_data")
 public class RawRealData {
     @Id
     private String id;
-    private int itemId;
+    private String itemId;
     private Double value;
     private LocalDateTime time;
 
     public RawRealData() {
     }
 
-    public RawRealData(String id, int itemId, Double value, LocalDateTime time) {
-        this.id = id;
+    public RawRealData(String itemId, Double value, LocalDateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
@@ -40,11 +38,11 @@ public class RawRealData {
         this.id = id;
     }
 
-    public int getItemId() {
+    public String getItemId() {
         return itemId;
     }
 
-    public void setItemId(int itemId) {
+    public void setItemId(String itemId) {
         this.itemId = itemId;
     }
 

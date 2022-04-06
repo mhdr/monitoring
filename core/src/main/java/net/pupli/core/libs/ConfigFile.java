@@ -5,8 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Properties;
@@ -20,8 +18,6 @@ public class ConfigFile {
     private String rabbitmqHost;
     private String rabbitmqUserName;
     private String rabbitmqPassword;
-    private String redisHost;
-    private String redisPassword;
 
     public ConfigFile() {
         try {
@@ -42,22 +38,11 @@ public class ConfigFile {
                 rabbitmqUserName = prop.getProperty("rabbitmq.username");
                 rabbitmqPassword = prop.getProperty("rabbitmq.password");
 
-                redisHost = prop.getProperty("redis.host");
-                redisPassword = prop.getProperty("redis.password");
-
                 fis.close();
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
-    }
-
-    public String getRedisHost() {
-        return redisHost;
-    }
-
-    public String getRedisPassword() {
-        return redisPassword;
     }
 
     public String getMongodbHost() {

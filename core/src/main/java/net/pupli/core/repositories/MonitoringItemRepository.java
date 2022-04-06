@@ -1,6 +1,6 @@
-package net.pupli.core.repositories.mongodb;
+package net.pupli.core.repositories;
 
-import net.pupli.core.models.mongodb.MonitoringItem;
+import net.pupli.core.models.MonitoringItem;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
