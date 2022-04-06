@@ -1,7 +1,7 @@
 package net.pupli.core.services;
 
-import net.pupli.core.libs.DB;
-import net.pupli.core.models.MonitoringItem;
+import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.mongodb.MonitoringItem;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +23,7 @@ public class StaticCache {
         itemIds = new HashMap<Integer, String>();
         items = new HashMap<String, MonitoringItem>();
 
-        List<MonitoringItem> monitoringItems = DB.monitoringItemRepository.findAll();
+        List<MonitoringItem> monitoringItems = MyContext.monitoringItemRepository.findAll();
         for (MonitoringItem item : monitoringItems) {
             itemIds.put(item.getItemId(), item.getId());
             items.put(item.getId(), item);

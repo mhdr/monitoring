@@ -14,45 +14,20 @@ import java.util.Properties;
 public class ConfigFile {
 
     Logger logger = LoggerFactory.getLogger(ConfigFile.class);
-
-
-    public String getMongodbHost() {
-        return mongodbHost;
-    }
-
-    public String getMongodbUserName() {
-        return mongodbUserName;
-    }
-
-    public String getMongodbPassword() {
-        return mongodbPassword;
-    }
-
     private String mongodbHost;
     private String mongodbUserName;
     private String mongodbPassword;
-
-    public String getRabbitmqHost() {
-        return rabbitmqHost;
-    }
-
-    public String getRabbitmqUserName() {
-        return rabbitmqUserName;
-    }
-
-    public String getRabbitmqPassword() {
-        return rabbitmqPassword;
-    }
-
     private String rabbitmqHost;
     private String rabbitmqUserName;
     private String rabbitmqPassword;
+    private String redisHost;
+    private String redisPassword;
 
     public ConfigFile() {
         try {
             Path currentPath = Paths.get(System.getProperty("user.home"));
             Path filePath = Paths.get(currentPath.toString(), ".monitoringv5", "core.config");
-            File file=filePath.toFile();
+            File file = filePath.toFile();
 
             if (file.exists()) {
                 Properties prop = new Properties();
@@ -67,10 +42,45 @@ public class ConfigFile {
                 rabbitmqUserName = prop.getProperty("rabbitmq.username");
                 rabbitmqPassword = prop.getProperty("rabbitmq.password");
 
+                redisHost = prop.getProperty("redis.host");
+                redisPassword = prop.getProperty("redis.password");
+
                 fis.close();
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
+    }
+
+    public String getRedisHost() {
+        return redisHost;
+    }
+
+    public String getRedisPassword() {
+        return redisPassword;
+    }
+
+    public String getMongodbHost() {
+        return mongodbHost;
+    }
+
+    public String getMongodbUserName() {
+        return mongodbUserName;
+    }
+
+    public String getMongodbPassword() {
+        return mongodbPassword;
+    }
+
+    public String getRabbitmqHost() {
+        return rabbitmqHost;
+    }
+
+    public String getRabbitmqUserName() {
+        return rabbitmqUserName;
+    }
+
+    public String getRabbitmqPassword() {
+        return rabbitmqPassword;
     }
 }

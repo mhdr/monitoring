@@ -1,4 +1,4 @@
-package net.pupli.core.models;
+package net.pupli.core.models.mongodb;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.*;
