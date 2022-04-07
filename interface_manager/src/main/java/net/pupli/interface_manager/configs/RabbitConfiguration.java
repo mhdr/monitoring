@@ -79,13 +79,13 @@ public class RabbitConfiguration {
     @Bean("MonitoringV5_Queue1")
     public Queue MonitoringV5_Queue1() {
         // declare queue1
-        return new Queue("MonitoringV5_Queue1");
+        return new Queue("MonitoringV5_Queue1",false,false,false);
     }
 
     @Bean("MonitoringV5_Queue2")
     public Queue MonitoringV5_Queue2() {
         // declare queue2
-        return new Queue("MonitoringV5_Queue2");
+        return new Queue("MonitoringV5_Queue2",false,false,false);
     }
 
     @Bean

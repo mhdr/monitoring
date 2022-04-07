@@ -6,8 +6,6 @@ import net.pupli.core.models.RawRealData;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-
-import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
 @Component

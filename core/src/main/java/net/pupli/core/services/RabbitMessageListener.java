@@ -1,19 +1,15 @@
 package net.pupli.core.services;
 
 import com.google.gson.Gson;
-import com.rabbitmq.client.Channel;
 import net.pupli.core.dto.ReadValueDto;
 import net.pupli.core.libs.MyContext;
 import net.pupli.core.models.RawBooleanData;
 import net.pupli.core.models.RawRealData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
-import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
