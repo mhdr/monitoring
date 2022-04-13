@@ -22,7 +22,7 @@ public class ConfigFile {
     public ConfigFile() {
         try {
             Path currentPath = Paths.get(System.getProperty("user.home"));
-            Path filePath = Paths.get(currentPath.toString(), ".monitoringv5", "core.config");
+            Path filePath = Paths.get(currentPath.toString(), ".monitoring", "core.config");
             File file = filePath.toFile();
 
             if (file.exists()) {

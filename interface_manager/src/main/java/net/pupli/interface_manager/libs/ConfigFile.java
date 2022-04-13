@@ -18,11 +18,12 @@ public class ConfigFile {
     private String rabbitmqCoreHost;
     private String rabbitmqCoreUserName;
     private String rabbitmqCorePassword;
+    private String coreWebAddress;
 
     public ConfigFile() {
         try {
             Path currentPath = Paths.get(System.getProperty("user.home"));
-            Path filePath = Paths.get(currentPath.toString(), ".monitoringv5", "interface_manager.config");
+            Path filePath = Paths.get(currentPath.toString(), ".monitoring", "interface_manager.config");
             File file=filePath.toFile();
 
             if (file.exists()) {
@@ -34,15 +35,21 @@ public class ConfigFile {
                 rabbitmqUserName = prop.getProperty("rabbitmq.username");
                 rabbitmqPassword = prop.getProperty("rabbitmq.password");
 
-                rabbitmqCoreHost = prop.getProperty("rabbitmq.core.host");
-                rabbitmqCoreUserName = prop.getProperty("rabbitmq.core.username");
-                rabbitmqCorePassword = prop.getProperty("rabbitmq.core.password");
+                rabbitmqCoreHost = prop.getProperty("core.rabbitmq.host");
+                rabbitmqCoreUserName = prop.getProperty("core.rabbitmq.username");
+                rabbitmqCorePassword = prop.getProperty("core.rabbitmq.password");
+
+                coreWebAddress=prop.getProperty("core.web.address");
 
                 fis.close();
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
+    }
+
+    public String getCoreWebAddress() {
+        return coreWebAddress;
     }
 
     public String getRabbitmqCoreHost() {

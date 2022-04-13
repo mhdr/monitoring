@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 public class ApplicationContextProvider implements ApplicationContextAware {
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        MyContext.amqpTemplate= (AmqpTemplate) applicationContext.getBean("rabbitTemplate");
-        MyContext.amqpTemplateCore= (AmqpTemplate) applicationContext.getBean("rabbitTemplateCore");
+        MyContext.amqpTemplate = (AmqpTemplate) applicationContext.getBean("rabbitTemplate");
+        MyContext.amqpTemplateCore = (AmqpTemplate) applicationContext.getBean("rabbitTemplateCore");
+        MyContext.myCache = applicationContext.getBean(MyCache.class);
     }
 }
