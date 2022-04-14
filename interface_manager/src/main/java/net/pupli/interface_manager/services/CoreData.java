@@ -49,7 +49,7 @@ public class CoreData implements CommandLineRunner {
                 MyContext.myCache.getItems().put(item.getItemId(), item);
             }
 
-            logger.info(responseStr);
+            // logger.info(responseStr);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

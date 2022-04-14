@@ -19,7 +19,7 @@ public class RabbitConfiguration {
     @Bean("connectionFactory")
     public CachingConnectionFactory connectionFactory() {
         // configure to connect with credential
-        ConfigFile configFile = new ConfigFile();
+        ConfigFile configFile = ConfigFile.getInstance();
         CachingConnectionFactory connectionFactory =
                 new CachingConnectionFactory(configFile.getRabbitmqHost());
         connectionFactory.setUsername(configFile.getRabbitmqUserName());

@@ -31,8 +31,7 @@ public class RabbitMessageListener implements MessageListener {
     private void Queue3(Message message) {
         try {
             String str = new String(message.getBody());
-            // System.out.println(str);
-            logger.info(str);
+            //logger.info(str);
 
             Gson gson = new Gson();
             ReadValueDto readValueDto = gson.fromJson(str, ReadValueDto.class);
@@ -66,8 +65,7 @@ public class RabbitMessageListener implements MessageListener {
     private void Queue4(Message message) {
         try {
             String str = new String(message.getBody());
-            // System.out.println(str);
-            logger.info(str);
+            //logger.info(str);
 
             Gson gson = new Gson();
             ReadValueDto readValueDto = gson.fromJson(str, ReadValueDto.class);

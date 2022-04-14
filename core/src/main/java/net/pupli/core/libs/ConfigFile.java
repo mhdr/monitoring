@@ -11,6 +11,16 @@ import java.util.Properties;
 
 public class ConfigFile {
 
+    private static ConfigFile INSTANCE;
+
+    public static ConfigFile getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new ConfigFile();
+        }
+
+        return INSTANCE;
+    }
+
     Logger logger = LoggerFactory.getLogger(ConfigFile.class);
     private String mongodbHost;
     private String mongodbUserName;

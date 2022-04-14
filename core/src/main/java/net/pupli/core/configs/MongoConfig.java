@@ -20,7 +20,7 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
      */
     public MongoClient mongoClient() {
 
-        ConfigFile configFile = new ConfigFile();
+        ConfigFile configFile = ConfigFile.getInstance();
 
         //String connectionString = "mongodb://monitoringv5:monitoringv5@localhost:27017/?authSource=admin&authMechanism=SCRAM-SHA-1";
         MongoCredential credential = MongoCredential.createScramSha256Credential(configFile.getMongodbUserName(), "admin", configFile.getMongodbPassword().toCharArray());

@@ -4,7 +4,6 @@ import net.pupli.core.dto.RequestItemsDto;
 import net.pupli.core.dto.ResponseItemsDto;
 import net.pupli.core.libs.MyContext;
 import net.pupli.core.models.MonitoringItem;
-import net.pupli.core.services.RabbitMessageListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -18,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 @RestController
-public class InterfaceManagerController {
-    Logger logger = LoggerFactory.getLogger(InterfaceManagerController.class);
+public class InterfaceController {
+    Logger logger = LoggerFactory.getLogger(InterfaceController.class);
 
     @RequestMapping(value = "/api/interface/test", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseItemsDto test(HttpServletRequest request, HttpServletResponse response, @RequestBody RequestItemsDto requestDto) {
