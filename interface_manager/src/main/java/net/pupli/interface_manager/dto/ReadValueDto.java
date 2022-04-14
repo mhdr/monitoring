@@ -13,6 +13,7 @@ public class ReadValueDto implements Serializable {
     private String credential;
     private String time;
     private List<Value> valueList;
+
     public ReadValueDto() {
         this.valueList = new ArrayList<>();
     }

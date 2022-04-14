@@ -3,6 +3,7 @@ package net.pupli.core.controllers;
 import net.pupli.core.dto.RequestItemsDto;
 import net.pupli.core.dto.ResponseItemsDto;
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.InterfaceCredential;
 import net.pupli.core.models.MonitoringItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +27,6 @@ public class InterfaceController {
 
             ResponseItemsDto responseDto = new ResponseItemsDto();
 
-            List<MonitoringItem> items = MyContext.monitoringItemRepository.findAll();
-
-            for (MonitoringItem item : items) {
-                responseDto.getItems().add(new ResponseItemsDto.Item(item.getId(), item.getItemId(), item.getQos()));
-            }
-
             return responseDto;
 
         } catch (Exception ex) {
@@ -51,6 +46,22 @@ public class InterfaceController {
 
             for (MonitoringItem item : items) {
                 responseDto.getItems().add(new ResponseItemsDto.Item(item.getId(), item.getItemId(), item.getQos()));
+            }
+
+            // find valid credentials
+
+            List<InterfaceCredential> credentials = MyContext.interfaceCredentialRepository.findAll();
+
+            for (InterfaceCredential credential : credentials) {
+                if (credential.getIsDisabled()) {
+                    continue;
+                }
+
+                if (credential.getValidUntil().isBeforeNow()) {
+                    continue;
+                }
+
+                responseDto.getCredentials().add(credential.getCredential());
             }
 
             return responseDto;

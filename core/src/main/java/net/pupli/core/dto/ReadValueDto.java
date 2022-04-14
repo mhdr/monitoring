@@ -4,15 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @version 3
+ * @since 2019-12-14
+ */
 public class ReadValueDto implements Serializable {
 
     private String credential;
     private String time;
-    private List<Value> dataList;
+    private List<Value> valueList;
 
     public ReadValueDto() {
-        this.dataList = new ArrayList<>();
+        this.valueList = new ArrayList<>();
     }
 
     public String getCredential() {
@@ -31,12 +34,12 @@ public class ReadValueDto implements Serializable {
         this.time = time;
     }
 
-    public List<Value> getDataList() {
-        return dataList;
+    public List<Value> getValueList() {
+        return valueList;
     }
 
-    public void setDataList(List<Value> valueList) {
-        this.dataList = valueList;
+    public void setValueList(List<Value> valueList) {
+        this.valueList = valueList;
     }
 
     public static class Value implements Serializable {

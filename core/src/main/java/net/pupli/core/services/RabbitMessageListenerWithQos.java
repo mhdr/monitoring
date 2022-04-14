@@ -11,25 +11,24 @@ import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RabbitMessageListener implements MessageListener {
+public class RabbitMessageListenerWithQos implements MessageListener {
 
-    Logger logger = LoggerFactory.getLogger(RabbitMessageListener.class);
+    Logger logger = LoggerFactory.getLogger(RabbitMessageListenerWithQos.class);
 
     @Override
     public void onMessage(Message message) {
         if (MyContext.myCache.getShouldProcessData()) {
             switch (message.getMessageProperties().getConsumerQueue()) {
-                case "MonitoringV5_Queue3" -> Queue3(message);
-                case "MonitoringV5_Queue4" -> Queue4(message);
+                case "MonitoringV5_Queue5" -> Queue5(message);
+                case "MonitoringV5_Queue6" -> Queue6(message);
             }
         }
     }
 
-    private void Queue3(Message message) {
+    private void Queue5(Message message) {
         try {
             String str = new String(message.getBody());
             //logger.info(str);
@@ -63,7 +62,7 @@ public class RabbitMessageListener implements MessageListener {
         }
     }
 
-    private void Queue4(Message message) {
+    private void Queue6(Message message) {
         try {
             String str = new String(message.getBody());
             //logger.info(str);

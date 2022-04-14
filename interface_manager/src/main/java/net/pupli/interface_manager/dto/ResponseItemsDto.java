@@ -6,10 +6,20 @@ import java.util.List;
 
 public class ResponseItemsDto implements Serializable {
 
+    private List<String> credentials;
     private List<Item> items;
 
     public ResponseItemsDto() {
         this.items = new ArrayList<>();
+        this.credentials = new ArrayList<>();
+    }
+
+    public List<String> getCredentials() {
+        return credentials;
+    }
+
+    public void setCredentials(List<String> credentials) {
+        this.credentials = credentials;
     }
 
     public List<Item> getItems() {
@@ -26,8 +36,10 @@ public class ResponseItemsDto implements Serializable {
         private String id;
         private int itemId;
         private int qos;
+
         public Item() {
         }
+
         public Item(String id, int itemId, int qos) {
             this.id = id;
             this.itemId = itemId;

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-user_config_file=$HOME/.monitoring/core/Config.java
+user_config_file=$HOME/.monitoringv5/core/Config.java
 project_config_file=src/main/java/net/pupli/monitoring/core/lib/Config.java
 deploy_dir=/opt/monitoring/core
 service_name=monitoring_core.service

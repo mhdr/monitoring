@@ -2,7 +2,9 @@ package net.pupli.core.services;
 
 import net.pupli.core.configs.AppConfig;
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.InterfaceCredential;
 import net.pupli.core.models.MonitoringItem;
+import org.joda.time.DateTime;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -15,7 +17,15 @@ public class Test {
         myCache = context.getBean(MyCache.class);
     }
 
-    public void Insert() {
+    public void InsertCredential() {
+        MyContext.interfaceCredentialRepository.insert(new InterfaceCredential("779e43d0-7e31-49e5-864f-26234abf3909",
+                DateTime.now().plusYears(1), false));
+
+        MyContext.interfaceCredentialRepository.insert(new InterfaceCredential("66ad9345-9e09-4629-aed2-e8684a9cf31d",
+                DateTime.now().plusYears(1), false));
+    }
+
+    public void InsertItems() {
         MyContext.monitoringItemRepository.insert(new MonitoringItem(10, "Real Data 10", 2,
                 new MonitoringItem.RealItemProperties("%")));
 

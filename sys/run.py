@@ -41,7 +41,7 @@ while True:
 
         now = datetime.datetime.now().isoformat()
 
-        ReadValueDto = {"credential": "779e43d0-7e31-49e5-864f-26234abf3909", "time": now, "dataList": dataList}
+        ReadValueDto = {"credential": "779e43d0-7e31-49e5-864f-26234abf3909", "time": now, "valueList": dataList}
 
         output = json.dumps(ReadValueDto)
 

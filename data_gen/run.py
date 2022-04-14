@@ -81,9 +81,9 @@ while True:
         now = datetime.datetime.now().isoformat()
 
         ReadValueDtoReal = {"credential": "66ad9345-9e09-4629-aed2-e8684a9cf31d", "time": now,
-                            "dataList": valueListReal}
+                            "valueList": valueListReal}
         ReadValueDtoBoolean = {"credential": "66ad9345-9e09-4629-aed2-e8684a9cf31d", "time": now,
-                               "dataList": valueListBoolean}
+                               "valueList": valueListBoolean}
 
         outputReal = json.dumps(ReadValueDtoReal)
         outputBoolean = json.dumps(ReadValueDtoBoolean)

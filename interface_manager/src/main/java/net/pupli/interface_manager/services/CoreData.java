@@ -11,12 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.nio.file.Paths;
-
 @Component
 public class CoreData implements CommandLineRunner {
 
@@ -44,12 +38,15 @@ public class CoreData implements CommandLineRunner {
             Response response = client.newCall(request).execute();
             String responseStr = response.body().string();
             ResponseItemsDto responseDto = gson.fromJson(responseStr, ResponseItemsDto.class);
-            for (ResponseItemsDto.Item item :
-                    responseDto.getItems()) {
+            for (ResponseItemsDto.Item item : responseDto.getItems()) {
                 MyContext.myCache.getItems().put(item.getItemId(), item);
             }
 
-            // logger.info(responseStr);
+            for (String credential : responseDto.getCredentials()) {
+                MyContext.myCache.getCredentials().add(credential);
+            }
+
+            logger.info(responseStr);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

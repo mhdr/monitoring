@@ -1,9 +1,11 @@
 package net.pupli.core.models;
 
+import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Document(collection = "raw_boolean_data")
 public class RawBooleanData {
@@ -11,12 +13,12 @@ public class RawBooleanData {
     private String id;
     private String itemId;
     private Boolean value;
-    private LocalDateTime time;
+    private DateTime time;
 
     public RawBooleanData() {
     }
 
-    public RawBooleanData(String itemId, Boolean value, LocalDateTime time) {
+    public RawBooleanData(String itemId, Boolean value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
@@ -46,11 +48,11 @@ public class RawBooleanData {
         this.itemId = itemId;
     }
 
-    public LocalDateTime getTime() {
+    public DateTime getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(DateTime time) {
         this.time = time;
     }
 }
