@@ -1,10 +1,7 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
-import net.pupli.core.repositories.InterfaceCredentialRepository;
-import net.pupli.core.repositories.MonitoringItemRepository;
-import net.pupli.core.repositories.RawBooleanDataRepository;
-import net.pupli.core.repositories.RawRealDataRepository;
+import net.pupli.core.repositories.*;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
@@ -23,5 +20,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
         MyContext.rawRealDataRepository = applicationContext.getBean(RawRealDataRepository.class);
         MyContext.rawBooleanDataRepository = applicationContext.getBean(RawBooleanDataRepository.class);
         MyContext.interfaceCredentialRepository = applicationContext.getBean(InterfaceCredentialRepository.class);
+        MyContext.realDataRepository = applicationContext.getBean(RealDataRepository.class);
+        MyContext.booleanDataRepository = applicationContext.getBean(BooleanDataRepository.class);
     }
 }
