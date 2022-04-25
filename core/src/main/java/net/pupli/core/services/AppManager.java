@@ -1,10 +1,7 @@
 package net.pupli.core.services;
 
-import net.pupli.core.libs.ConfigFile;
 import net.pupli.core.libs.InitDb;
 import net.pupli.core.libs.MyContext;
-import net.pupli.core.models.RawBooleanData;
-import net.pupli.core.models.RawRealData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -29,8 +26,8 @@ public class AppManager {
         MyContext.myCache.loadItems();
         MyContext.myCache.loadRawItems();
 
-        initDb.initRealData();
-        initDb.initBooleanData();
+        initDb.initFinalRealData();
+        initDb.initFinalBooleanData();
 
         // should start processing data after starting app
         MyContext.myCache.setShouldProcessData(true);

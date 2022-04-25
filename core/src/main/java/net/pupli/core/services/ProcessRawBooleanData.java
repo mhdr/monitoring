@@ -1,9 +1,6 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
-import net.pupli.core.models.RawBooleanData;
-import net.pupli.core.models.RawRealData;
-import net.pupli.core.models.RealData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -26,35 +23,31 @@ public class ProcessRawBooleanData implements CommandLineRunner {
             try {
                 while (true) {
                     try {
-
+                        // check if we are allowed to do processing data
                         if (MyContext.myCache.getShouldProcessData()) {
+                            // iterate through all raw data which are available in raw collection in mongodb
+                            // and check if that related data is available on final data collection
+                            // id data is present update it else create a new record
                             var rawDataList = MyContext.rawBooleanDataRepository.findAll();
-                            var dataList = MyContext.booleanDataRepository.findAll();
+                            var dataList = MyContext.finalBooleanDataRepository.findAll();
 
-                            for (RawBooleanData rawData : rawDataList) {
+                            for (var rawData : rawDataList) {
                                 var optionalData = dataList.stream()
                                         .filter(x -> Objects.equals(x.getItemId(), rawData.getItemId())).findFirst();
+
+                                // check if data is available on final data collection then update it
                                 if (optionalData.isPresent()) {
                                     var data = optionalData.get();
-
-                                    if (data.getTime() == null) {
-                                        data.setPrevValue(rawData.getValue());
-                                        data.setPrevTime(rawData.getTime());
-                                    } else if (rawData.getTime().isAfter(data.getTime())) {
-                                        data.setPrevValue(data.getValue());
-                                        data.setPrevTime(data.getTime());
-                                    }
-
                                     data.setValue(rawData.getValue());
                                     data.setTime(rawData.getTime());
                                 }
                             }
 
-                            MyContext.booleanDataRepository.saveAll(dataList);
+                            MyContext.finalBooleanDataRepository.saveAll(dataList);
                         }
 
                     } catch (Exception ex) {
-                        ex.printStackTrace();
+                        logger.error(ex.getMessage(), ex);
                     } finally {
                         Thread.sleep(100);
                     }

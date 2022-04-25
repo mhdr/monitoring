@@ -12,15 +12,6 @@ import java.util.Properties;
 public class ConfigFile {
 
     private static ConfigFile INSTANCE;
-
-    public static ConfigFile getInstance() {
-        if(INSTANCE == null) {
-            INSTANCE = new ConfigFile();
-        }
-
-        return INSTANCE;
-    }
-
     Logger logger = LoggerFactory.getLogger(ConfigFile.class);
     private String mongodbHost;
     private String mongodbUserName;
@@ -28,6 +19,8 @@ public class ConfigFile {
     private String rabbitmqHost;
     private String rabbitmqUserName;
     private String rabbitmqPassword;
+    private String redisHost;
+    private String redisPassword;
 
     public ConfigFile() {
         try {
@@ -48,11 +41,30 @@ public class ConfigFile {
                 rabbitmqUserName = prop.getProperty("rabbitmq.username");
                 rabbitmqPassword = prop.getProperty("rabbitmq.password");
 
+                redisHost = prop.getProperty("redis.host");
+                redisPassword = prop.getProperty("redis.password");
+
                 fis.close();
             }
         } catch (Exception ex) {
             logger.error(ex.getMessage(), ex);
         }
+    }
+
+    public static ConfigFile getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new ConfigFile();
+        }
+
+        return INSTANCE;
+    }
+
+    public String getRedisHost() {
+        return redisHost;
+    }
+
+    public String getRedisPassword() {
+        return redisPassword;
     }
 
     public String getMongodbHost() {

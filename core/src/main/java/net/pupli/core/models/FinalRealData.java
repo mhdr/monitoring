@@ -5,30 +5,27 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "boolean_data")
-public class BooleanData {
+@Document(collection = "final_real_data")
+public class FinalRealData {
+
     @Id
     private String id;
     @Indexed
     private String itemId;
-    private Boolean value;
+    private Double value;
     private DateTime time;
-    private Boolean prevValue;
-    private DateTime prevTime;
 
-    public BooleanData() {
-    }
-
-    public BooleanData(String itemId) {
+    public FinalRealData(String itemId) {
         this.itemId = itemId;
     }
 
-    public BooleanData(String itemId, Boolean value, DateTime time, Boolean prevValue, DateTime prevTime) {
+    public FinalRealData() {
+    }
+
+    public FinalRealData(String itemId, Double value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
-        this.prevValue = prevValue;
-        this.prevTime = prevTime;
     }
 
     public String getId() {
@@ -47,11 +44,11 @@ public class BooleanData {
         this.itemId = itemId;
     }
 
-    public Boolean getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
@@ -61,21 +58,5 @@ public class BooleanData {
 
     public void setTime(DateTime time) {
         this.time = time;
-    }
-
-    public Boolean getPrevValue() {
-        return prevValue;
-    }
-
-    public void setPrevValue(Boolean prevValue) {
-        this.prevValue = prevValue;
-    }
-
-    public DateTime getPrevTime() {
-        return prevTime;
-    }
-
-    public void setPrevTime(DateTime prevTime) {
-        this.prevTime = prevTime;
     }
 }

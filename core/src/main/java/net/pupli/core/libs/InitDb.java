@@ -3,7 +3,6 @@ package net.pupli.core.libs;
 import net.pupli.core.models.*;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class InitDb {
 
@@ -15,35 +14,35 @@ public class InitDb {
         MyContext.rawBooleanDataRepository.deleteAll();
     }
 
-    public void initRealData() {
-        MyContext.realDataRepository.deleteAll();
+    public void initFinalRealData() {
+        MyContext.finalRealDataRepository.deleteAll();
 
-        var realDataList = new ArrayList<RealData>();
+        var realDataList = new ArrayList<FinalRealData>();
 
         MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
             // process only real data type
             if (monitoringItem.getItemType() == 2) {
-                RealData realData = new RealData(monitoringItem.getId());
-                realDataList.add(realData);
+                FinalRealData finalRealData = new FinalRealData(monitoringItem.getId());
+                realDataList.add(finalRealData);
             }
         });
 
-        MyContext.realDataRepository.saveAll(realDataList);
+        MyContext.finalRealDataRepository.saveAll(realDataList);
     }
 
-    public void initBooleanData() {
-        MyContext.booleanDataRepository.deleteAll();
+    public void initFinalBooleanData() {
+        MyContext.finalBooleanDataRepository.deleteAll();
 
-        var booleanDataList = new ArrayList<BooleanData>();
+        var booleanDataList = new ArrayList<FinalBooleanData>();
 
         MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
             // process only boolean data type
             if (monitoringItem.getItemType() == 1) {
-                BooleanData booleanData = new BooleanData(monitoringItem.getId());
-                booleanDataList.add(booleanData);
+                FinalBooleanData finalBooleanData = new FinalBooleanData(monitoringItem.getId());
+                booleanDataList.add(finalBooleanData);
             }
         });
 
-        MyContext.booleanDataRepository.saveAll(booleanDataList);
+        MyContext.finalBooleanDataRepository.saveAll(booleanDataList);
     }
 }
