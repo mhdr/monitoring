@@ -49,25 +49,25 @@ public class RabbitConfiguration {
 
     @Bean("MonitoringV5_Queue3")
     public Queue MonitoringV5_Queue3() {
-        // declare queue1
+        // Receives boolean raw data from interface manager and process it with qos 0
         return new Queue("MonitoringV5_Queue3", false, false, false);
     }
 
     @Bean("MonitoringV5_Queue4")
     public Queue MonitoringV5_Queue4() {
-        // declare queue2
+        // Receives real raw data from interface manager and process it with qos 0
         return new Queue("MonitoringV5_Queue4", false, false, false);
     }
 
     @Bean("MonitoringV5_Queue5")
     public Queue MonitoringV5_Queue5() {
-        // declare queue2
+        // Receives boolean raw data from interface manager and process it with qos 1
         return new Queue("MonitoringV5_Queue5", true, false, false);
     }
 
     @Bean("MonitoringV5_Queue6")
     public Queue MonitoringV5_Queue6() {
-        // declare queue2
+        // Receives real raw data from interface manager and process it with qos 1
         return new Queue("MonitoringV5_Queue6", true, false, false);
     }
 

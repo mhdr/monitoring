@@ -78,13 +78,13 @@ public class RabbitConfiguration {
 
     @Bean("MonitoringV5_Queue1")
     public Queue MonitoringV5_Queue1() {
-        // declare queue1
+        // Receives boolean raw data from interfaces
         return new Queue("MonitoringV5_Queue1",false,false,false);
     }
 
     @Bean("MonitoringV5_Queue2")
     public Queue MonitoringV5_Queue2() {
-        // declare queue2
+        // Receives real raw data from interfaces
         return new Queue("MonitoringV5_Queue2",false,false,false);
     }
 
