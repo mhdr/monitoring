@@ -1,0 +1,13 @@
+[Unit]
+Description=monitoring v5 core
+After=syslog.target network.target mongodb.service rabbitmq-server.service redis.service
+
+[Service]
+User=root
+Type=simple
+ExecStart=/opt/monitoringv5/core/run.sh
+SuccessExitStatus=143
+
+[Install]
+Alias=monitoringv5_core
+WantedBy=multi-user.target
