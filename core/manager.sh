@@ -38,7 +38,7 @@ fi
 
 ########################################################### App ####################################################################
 
-service_name=monitoring_core.service
+service_name=monitoringv5_core.service
 
 # app: 1 operation: 1
 app_start(){
