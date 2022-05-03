@@ -5,9 +5,9 @@ After=syslog.target network.target mongodb.service rabbitmq-server.service redis
 [Service]
 User=root
 Type=simple
-ExecStart=/opt/monitoringv5/core/run.sh
+ExecStart=/opt/monitoringv5/interface_manager/run.sh
 SuccessExitStatus=143
 
 [Install]
-Alias=monitoringv5_core
+Alias=monitoringv5_interface_manager
 WantedBy=multi-user.target
