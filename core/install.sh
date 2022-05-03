@@ -11,6 +11,8 @@ gradle build
 sudo mkdir -p ${deploy_dir}
 sudo cp build/libs/core.jar ${deploy_dir}/core.jar
 sudo cp run.sh ${deploy_dir}/run.sh
+sudo dos2unix ${deploy_dir}/run.sh
+sudo chmod +x ${deploy_dir}/run.sh
 
 # systemd
 sudo systemctl stop ${service_name}
