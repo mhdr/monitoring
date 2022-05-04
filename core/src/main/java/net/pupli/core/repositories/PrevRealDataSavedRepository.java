@@ -1,7 +1,11 @@
 package net.pupli.core.repositories;
 
 import net.pupli.core.models.PrevRealDataSaved;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PrevRealDataSavedRepository extends CrudRepository<PrevRealDataSaved, String> {
+import java.util.Optional;
+
+public interface PrevRealDataSavedRepository extends MongoRepository<PrevRealDataSaved, String> {
+    Optional<PrevRealDataSaved> findByItemId(String itemId);
 }

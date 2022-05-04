@@ -2,20 +2,32 @@ package net.pupli.core.models;
 
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.redis.core.RedisHash;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.io.Serializable;
 
-@RedisHash("prev_real_data_saved")
+@Document(collection = "prev_real_data_saved")
 // previous data we saved on items history
 // we need this because we want to know when we should save new data on items history
-public class PrevRealDataSaved implements Serializable {
+public class PrevRealDataSaved {
 
     @Id
     // this is the itemId that we use it here as id
     private String id;
+
+    @Indexed
+    private String itemId;
     private Double value;
     private DateTime time;
+
+    public String getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(String itemId) {
+        this.itemId = itemId;
+    }
 
     public String getId() {
         return id;

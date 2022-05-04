@@ -4,11 +4,9 @@ import com.google.gson.Gson;
 import com.mongodb.ClientSessionOptions;
 import com.mongodb.session.ClientSession;
 import net.pupli.core.dto.ReadValueDto;
+import net.pupli.core.libs.GsonBuilders;
 import net.pupli.core.libs.MyContext;
-import net.pupli.core.models.FinalRealData;
-import net.pupli.core.models.RawBooleanData;
-import net.pupli.core.models.RealItemHistory;
-import net.pupli.core.models.RealItemHistoryWeek;
+import net.pupli.core.models.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -31,12 +29,13 @@ public class RabbitMessageListenerItemsHistory implements MessageListener {
         }
     }
 
+
     @Transactional
     void Queue7(Message message) {
         try {
             String str = new String(message.getBody());
 
-            Gson gson = new Gson();
+            Gson gson = GsonBuilders.gsonDateTime();
             FinalRealData data = gson.fromJson(str, FinalRealData.class);
 
             RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
@@ -44,9 +43,24 @@ public class RabbitMessageListenerItemsHistory implements MessageListener {
 
             RealItemHistoryWeek realItemHistoryWeek = new RealItemHistoryWeek(data.getItemId(), data.getValue(), data.getTime());
             MyContext.realItemHistoryWeekRepository.save(realItemHistoryWeek);
-        } catch (Exception e) {
-            // e.printStackTrace();
-            logger.error(e.getMessage(), e);
+
+            var prevData = MyContext.prevRealDataSavedRepository.findByItemId(data.getItemId());
+
+            if (prevData.isPresent()) {
+                var prevDataValue = prevData.get();
+                prevDataValue.setValue(data.getValue());
+                prevDataValue.setTime(data.getTime());
+                MyContext.prevRealDataSavedRepository.save(prevDataValue);
+            } else {
+                var prevDataValue = new PrevRealDataSaved();
+                prevDataValue.setItemId(data.getItemId());
+                prevDataValue.setValue(data.getValue());
+                prevDataValue.setTime(data.getTime());
+                MyContext.prevRealDataSavedRepository.save(prevDataValue);
+            }
+
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
         }
     }
 }
