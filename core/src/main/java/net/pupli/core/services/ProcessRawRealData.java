@@ -41,6 +41,14 @@ public class ProcessRawRealData implements CommandLineRunner {
                                 if (optionalData.isPresent()) {
                                     var data = optionalData.get();
 
+                                    if (rawData.getTime() == null || rawData.getTime().isEmpty()) {
+                                        continue;
+                                    }
+
+                                    if (rawData.getValue() == null || rawData.getValue().isEmpty()) {
+                                        continue;
+                                    }
+
                                     DateTime t = DateTime.parse(rawData.getTime());
                                     Double v = Double.parseDouble(rawData.getValue());
 
