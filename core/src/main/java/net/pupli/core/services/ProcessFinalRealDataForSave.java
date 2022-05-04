@@ -62,10 +62,11 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                 if (prevData.isPresent()) {
                                     // if prev data is available we should check the last time we saved data
                                     var prevDataValue = prevData.get();
-                                    var item = MyContext.myCache.getItems().get(data.getItemId());
 
-                                    var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
-                                    if (diff.getSeconds() > item.getInterval()) {
+                                    if (prevDataValue.getValue()==null || prevDataValue.getTime()==null)
+                                    {
+                                        // prev data is null so we should just save current data
+
                                         // add new item history
                                         RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
                                         newItemsHistory.add(realItemHistory);
@@ -77,6 +78,28 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                         // update prev data
                                         prevDataValue.setValue(data.getValue());
                                         prevDataValue.setTime(data.getTime());
+                                    }
+                                    else {
+
+                                        // we should check whether we should save data or not
+                                        // saving data is based on interval
+
+                                        var item = MyContext.myCache.getItems().get(data.getItemId());
+
+                                        var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
+                                        if (diff.getSeconds() > item.getInterval()) {
+                                            // add new item history
+                                            RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistory.add(realItemHistory);
+
+                                            // add new item history for week
+                                            RealItemHistoryWeek realItemHistoryWeek = new RealItemHistoryWeek(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistoryWeek.add(realItemHistoryWeek);
+
+                                            // update prev data
+                                            prevDataValue.setValue(data.getValue());
+                                            prevDataValue.setTime(data.getTime());
+                                        }
                                     }
                                 }
                             } catch (Exception ex) {
