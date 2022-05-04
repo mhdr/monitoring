@@ -42,7 +42,7 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                     continue;
                                 }
 
-                                var prevData = MyContext.prevRealDataSavedRepository.findById(data.getItemId());
+                                var prevData = MyContext.prevRealDataSavedRepository.findByItemId(data.getItemId());
 
                                 if (prevData.isPresent()) {
                                     // if prev data is available we should check the last time we saved data
