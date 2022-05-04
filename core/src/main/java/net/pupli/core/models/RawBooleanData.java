@@ -12,23 +12,23 @@ public class RawBooleanData {
     @Id
     private String id;
     private String itemId;
-    private Boolean value;
-    private DateTime time;
+    private String value;
+    private String time;
 
     public RawBooleanData() {
     }
 
-    public RawBooleanData(String itemId, Boolean value, DateTime time) {
+    public RawBooleanData(String itemId, String value, String time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
     }
 
-    public Boolean getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
@@ -48,11 +48,11 @@ public class RawBooleanData {
         this.itemId = itemId;
     }
 
-    public DateTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(DateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }

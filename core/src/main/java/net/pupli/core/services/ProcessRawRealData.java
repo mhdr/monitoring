@@ -40,7 +40,7 @@ public class ProcessRawRealData implements CommandLineRunner {
                                 // check if data is available on final data collection
                                 if (optionalData.isPresent()) {
                                     var data = optionalData.get();
-                                    
+
                                     DateTime t = DateTime.parse(rawData.getTime());
                                     Double v = Double.parseDouble(rawData.getValue());
 

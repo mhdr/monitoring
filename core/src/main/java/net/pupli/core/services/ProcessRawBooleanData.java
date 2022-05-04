@@ -1,6 +1,7 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -38,8 +39,12 @@ public class ProcessRawBooleanData implements CommandLineRunner {
                                 // check if data is available on final data collection then update it
                                 if (optionalData.isPresent()) {
                                     var data = optionalData.get();
-                                    data.setValue(rawData.getValue());
-                                    data.setTime(rawData.getTime());
+
+                                    DateTime t=DateTime.parse(rawData.getTime());
+                                    Boolean v = Boolean.parseBoolean(rawData.getValue());
+
+                                    data.setValue(v);
+                                    data.setTime(t);
                                 }
                             }
 

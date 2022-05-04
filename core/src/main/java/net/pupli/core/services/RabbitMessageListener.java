@@ -40,8 +40,6 @@ public class RabbitMessageListener implements MessageListener {
             List<RawBooleanData> dataList = new ArrayList<>();
 
             for (ReadValueDto.Value value : readValueDto.getValueList()) {
-                DateTime time=DateTime.parse(readValueDto.getTime());
-                Boolean v = Boolean.parseBoolean(value.getValue());
                 String itemId = MyContext.myCache.getItemIds().get(value.getId());
 
                 if (itemId == null) {
@@ -49,8 +47,8 @@ public class RabbitMessageListener implements MessageListener {
                 }
 
                 RawBooleanData matched = MyContext.myCache.getRawBooleanData().get(itemId);
-                matched.setValue(v);
-                matched.setTime(time);
+                matched.setValue(value.getValue());
+                matched.setTime(readValueDto.getTime());
 
                 dataList.add(matched);
             }
