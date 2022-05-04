@@ -7,5 +7,4 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface PrevRealDataSavedRepository extends MongoRepository<PrevRealDataSaved, String> {
-    Optional<PrevRealDataSaved> findByItemId(String itemId);
 }
