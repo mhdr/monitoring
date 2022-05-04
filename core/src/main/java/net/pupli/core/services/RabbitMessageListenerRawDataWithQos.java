@@ -5,7 +5,6 @@ import net.pupli.core.dto.ReadValueDto;
 import net.pupli.core.libs.MyContext;
 import net.pupli.core.models.RawBooleanData;
 import net.pupli.core.models.RawRealData;
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.Message;
@@ -14,9 +13,9 @@ import org.springframework.amqp.core.MessageListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RabbitMessageListenerWithQos implements MessageListener {
+public class RabbitMessageListenerRawDataWithQos implements MessageListener {
 
-    Logger logger = LoggerFactory.getLogger(RabbitMessageListenerWithQos.class);
+    Logger logger = LoggerFactory.getLogger(RabbitMessageListenerRawDataWithQos.class);
 
     @Override
     public void onMessage(Message message) {

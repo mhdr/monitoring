@@ -6,7 +6,10 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 import net.pupli.core.libs.ConfigFile;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoDatabaseFactory;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.data.mongodb.config.AbstractMongoClientConfiguration;
 
 import java.util.Arrays;
@@ -46,5 +49,10 @@ public class MongoConfig extends AbstractMongoClientConfiguration {
     @Override
     protected boolean autoIndexCreation() {
         return true;
+    }
+
+    @Bean
+    MongoTransactionManager transactionManager(MongoDatabaseFactory dbFactory) {
+        return new MongoTransactionManager(dbFactory);
     }
 }

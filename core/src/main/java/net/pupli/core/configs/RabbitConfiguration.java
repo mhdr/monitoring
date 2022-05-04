@@ -1,8 +1,9 @@
 package net.pupli.core.configs;
 
 import net.pupli.core.libs.ConfigFile;
-import net.pupli.core.services.RabbitMessageListener;
-import net.pupli.core.services.RabbitMessageListenerWithQos;
+import net.pupli.core.services.RabbitMessageListenerItemsHistory;
+import net.pupli.core.services.RabbitMessageListenerRawData;
+import net.pupli.core.services.RabbitMessageListenerRawDataWithQos;
 import org.springframework.amqp.core.AcknowledgeMode;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -11,6 +12,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.MongoTransactionManager;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
@@ -71,8 +73,14 @@ public class RabbitConfiguration {
         return new Queue("MonitoringV5_Queue6", true, false, false);
     }
 
+    @Bean("MonitoringV5_Queue7")
+    public Queue MonitoringV5_Queue7() {
+        // Saves final real data in items history
+        return new Queue("MonitoringV5_Queue7", true, false, false);
+    }
+
     @Bean
-    public SimpleMessageListenerContainer messageListenerContainer() {
+    public SimpleMessageListenerContainer messageListenerForRawData() {
         // configure listener to receive messages from queues
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
@@ -82,12 +90,26 @@ public class RabbitConfiguration {
         container.setAcknowledgeMode(AcknowledgeMode.NONE);
         // listen to queues
         container.setQueues(MonitoringV5_Queue3(), MonitoringV5_Queue4());
-        container.setMessageListener(new RabbitMessageListener());
+        container.setMessageListener(new RabbitMessageListenerRawData());
         return container;
     }
 
     @Bean
-    public SimpleMessageListenerContainer messageListenerContainerWithQos() {
+    public SimpleMessageListenerContainer messageListenerForItemsHistory() {
+        // configure listener to receive messages from queues
+        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory());
+        container.setConcurrentConsumers(8);
+        container.setMaxConcurrentConsumers(32);
+        container.setAcknowledgeMode(AcknowledgeMode.AUTO);
+        // listen to queues
+        container.setQueues(MonitoringV5_Queue7());
+        container.setMessageListener(new RabbitMessageListenerItemsHistory());
+        return container;
+    }
+
+    @Bean
+    public SimpleMessageListenerContainer messageListenerForRawDataWithQos() {
         // configure listener to receive messages from queues
         SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
         container.setConnectionFactory(connectionFactory());
@@ -97,7 +119,7 @@ public class RabbitConfiguration {
         container.setAcknowledgeMode(AcknowledgeMode.AUTO);
         // listen to queues
         container.setQueues(MonitoringV5_Queue5(), MonitoringV5_Queue6());
-        container.setMessageListener(new RabbitMessageListenerWithQos());
+        container.setMessageListener(new RabbitMessageListenerRawDataWithQos());
         return container;
     }
 

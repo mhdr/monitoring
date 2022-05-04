@@ -18,6 +18,15 @@ public class RealItemHistoryWeek {
     private Double value;
     private DateTime time;
 
+    public RealItemHistoryWeek(String itemId, Double value, DateTime time) {
+        this.itemId = itemId;
+        this.value = value;
+        this.time = time;
+    }
+
+    public RealItemHistoryWeek() {
+    }
+
     public String getId() {
         return id;
     }

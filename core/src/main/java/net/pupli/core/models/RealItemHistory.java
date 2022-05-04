@@ -18,6 +18,16 @@ public class RealItemHistory {
     private Double value;
     private DateTime time;
 
+    public RealItemHistory(String itemId, Double value, DateTime time) {
+        this.itemId = itemId;
+        this.value = value;
+        this.time = time;
+        this.partitionKey = String.format("%d%d", time.year().get(), time.monthOfYear().get());
+    }
+
+    public RealItemHistory() {
+    }
+
     public String getId() {
         return id;
     }
