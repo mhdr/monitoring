@@ -17,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
@@ -43,6 +44,9 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                         var finalRealDataList = MyContext.finalRealDataRepository.findAll();
                         var prevRealDataList = MyContext.prevRealDataSavedRepository.findAll();
 
+                        var newItemsHistory=new ArrayList<RealItemHistory>();
+                        var newItemsHistoryWeek=new ArrayList<RealItemHistoryWeek>();
+
                         for (var data : finalRealDataList) {
                             try {
 
@@ -62,52 +66,38 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
 
                                     var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
                                     if (diff.getSeconds() > item.getInterval()) {
-                                        // save data
-                                        SaveInDatabase(data, prevData);
+                                        // add new item history
+                                        RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
+                                        newItemsHistory.add(realItemHistory);
+
+                                        // add new item history for week
+                                        RealItemHistoryWeek realItemHistoryWeek = new RealItemHistoryWeek(data.getItemId(), data.getValue(), data.getTime());
+                                        newItemsHistoryWeek.add(realItemHistoryWeek);
+
+                                        // update prev data
+                                        prevDataValue.setValue(data.getValue());
+                                        prevDataValue.setTime(data.getTime());
                                     }
-                                } else {
-                                    // it's the first time we are going to save data in prev collection, so we should save data
-                                    SaveInDatabase(data, prevData);
                                 }
                             } catch (Exception ex) {
                                 logger.error(ex.getMessage(), ex);
                             }
                         }
+
+
+                        MyContext.realItemHistoryRepository.saveAll(newItemsHistory);
+                        MyContext.realItemHistoryWeekRepository.saveAll(newItemsHistoryWeek);
+                        MyContext.prevRealDataSavedRepository.saveAll(prevRealDataList);
+
                     } catch (Exception ex) {
                         logger.error(ex.getMessage(), ex);
                     } finally {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     }
                 }
             } catch (Exception ex) {
                 logger.error(ex.getMessage(), ex);
             }
         });
-    }
-
-    @Transactional
-    void SaveInDatabase(FinalRealData data, Optional<PrevRealDataSaved> prevData) {
-        try {
-            RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
-            MyContext.realItemHistoryRepository.save(realItemHistory);
-
-            RealItemHistoryWeek realItemHistoryWeek = new RealItemHistoryWeek(data.getItemId(), data.getValue(), data.getTime());
-            MyContext.realItemHistoryWeekRepository.save(realItemHistoryWeek);
-
-            if (prevData.isPresent()) {
-                var prevDataValue = prevData.get();
-                prevDataValue.setValue(data.getValue());
-                prevDataValue.setTime(data.getTime());
-                MyContext.prevRealDataSavedRepository.save(prevDataValue);
-            } else {
-                var prevDataValue = new PrevRealDataSaved();
-                prevDataValue.setItemId(data.getItemId());
-                prevDataValue.setValue(data.getValue());
-                prevDataValue.setTime(data.getTime());
-                MyContext.prevRealDataSavedRepository.save(prevDataValue);
-            }
-        } catch (Exception ex) {
-            logger.error(ex.getMessage(), ex);
-        }
     }
 }

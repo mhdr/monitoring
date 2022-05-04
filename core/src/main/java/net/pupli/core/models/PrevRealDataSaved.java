@@ -21,6 +21,13 @@ public class PrevRealDataSaved {
     private Double value;
     private DateTime time;
 
+    public PrevRealDataSaved() {
+    }
+
+    public PrevRealDataSaved(String itemId) {
+        this.itemId = itemId;
+    }
+
     public String getItemId() {
         return itemId;
     }

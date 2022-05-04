@@ -15,7 +15,6 @@ public class MyContext {
     public static InterfaceCredentialRepository interfaceCredentialRepository = null;
     public static FinalRealDataRepository finalRealDataRepository = null;
     public static FinalBooleanDataRepository finalBooleanDataRepository = null;
-    public static PrevRealDataRepository prevRealDataRepository = null;
     public static PrevRealDataSavedRepository prevRealDataSavedRepository = null;
     public static RealItemHistoryRepository realItemHistoryRepository = null;
     public static RealItemHistoryWeekRepository realItemHistoryWeekRepository = null;

@@ -71,12 +71,6 @@ public class RabbitConfiguration {
         return new Queue("MonitoringV5_Queue6", true, false, false);
     }
 
-    @Bean("MonitoringV5_Queue7")
-    public Queue MonitoringV5_Queue7() {
-        // Saves final real data in items history
-        return new Queue("MonitoringV5_Queue7", true, false, false);
-    }
-
     @Bean
     public SimpleMessageListenerContainer messageListenerForRawData() {
         // configure listener to receive messages from queues

@@ -30,6 +30,21 @@ public class InitDb {
         MyContext.finalRealDataRepository.saveAll(realDataList);
     }
 
+    public void initPrevRealData() {
+        MyContext.prevRealDataSavedRepository.deleteAll();
+
+        var dataList = new ArrayList<PrevRealDataSaved>();
+
+        MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
+            if (monitoringItem.getItemType() == 2) {
+                PrevRealDataSaved newData = new PrevRealDataSaved(monitoringItem.getId());
+                dataList.add(newData);
+            }
+        });
+
+        MyContext.prevRealDataSavedRepository.saveAll(dataList);
+    }
+
     public void initFinalBooleanData() {
         MyContext.finalBooleanDataRepository.deleteAll();
 
