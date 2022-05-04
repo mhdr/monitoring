@@ -5,12 +5,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-import java.io.Serializable;
-
 @Document(collection = "prev_real_data")
-// use this class to save prev data we process on final data, we need this because of onChange data strategy
+// previous data we saved on items history
+// we need this because we want to know when we should save new data on items history
 public class PrevRealData {
+
     @Id
     // this is the itemId that we use it here as id
     private String id;
@@ -19,6 +18,13 @@ public class PrevRealData {
     private String itemId;
     private Double value;
     private DateTime time;
+
+    public PrevRealData() {
+    }
+
+    public PrevRealData(String itemId) {
+        this.itemId = itemId;
+    }
 
     public String getItemId() {
         return itemId;

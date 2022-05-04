@@ -1,25 +1,16 @@
 package net.pupli.core.services;
 
-import com.google.gson.*;
-import net.pupli.core.libs.GsonBuilders;
 import net.pupli.core.libs.MyContext;
-import net.pupli.core.models.FinalRealData;
-import net.pupli.core.models.PrevRealDataSaved;
 import net.pupli.core.models.RealItemHistory;
 import net.pupli.core.models.RealItemHistoryWeek;
-import org.joda.time.DateTime;
 import org.joda.time.Seconds;
-import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -42,10 +33,10 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                 while (true) {
                     try {
                         var finalRealDataList = MyContext.finalRealDataRepository.findAll();
-                        var prevRealDataList = MyContext.prevRealDataSavedRepository.findAll();
+                        var prevRealDataList = MyContext.prevRealDataRepository.findAll();
 
-                        var newItemsHistory=new ArrayList<RealItemHistory>();
-                        var newItemsHistoryWeek=new ArrayList<RealItemHistoryWeek>();
+                        var newItemsHistory = new ArrayList<RealItemHistory>();
+                        var newItemsHistoryWeek = new ArrayList<RealItemHistoryWeek>();
 
                         for (var data : finalRealDataList) {
                             try {
@@ -63,8 +54,7 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                     // if prev data is available we should check the last time we saved data
                                     var prevDataValue = prevData.get();
 
-                                    if (prevDataValue.getValue()==null || prevDataValue.getTime()==null)
-                                    {
+                                    if (prevDataValue.getValue() == null || prevDataValue.getTime() == null) {
                                         // prev data is null so we should just save current data
 
                                         // add new item history
@@ -78,8 +68,7 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                         // update prev data
                                         prevDataValue.setValue(data.getValue());
                                         prevDataValue.setTime(data.getTime());
-                                    }
-                                    else {
+                                    } else {
 
                                         // we should check whether we should save data or not
                                         // saving data is based on interval
@@ -110,11 +99,12 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
 
                         MyContext.realItemHistoryRepository.saveAll(newItemsHistory);
                         MyContext.realItemHistoryWeekRepository.saveAll(newItemsHistoryWeek);
-                        MyContext.prevRealDataSavedRepository.saveAll(prevRealDataList);
+                        MyContext.prevRealDataRepository.saveAll(prevRealDataList);
 
                     } catch (Exception ex) {
                         logger.error(ex.getMessage(), ex);
                     } finally {
+                        // check data every 1 second
                         Thread.sleep(1000);
                     }
                 }
