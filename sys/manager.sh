@@ -79,6 +79,7 @@ app_current_log(){
 
 # app: 1 operation: 8
 app_deploy_start(){
+    app_stop
     app_deploy
     app_start
 }
