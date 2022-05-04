@@ -12,23 +12,23 @@ public class RawRealData {
     @Id
     private String id;
     private String itemId;
-    private Double value;
-    private DateTime time;
+    private String value;
+    private String time;
 
     public RawRealData() {
     }
 
-    public RawRealData(String itemId, Double value, DateTime time) {
+    public RawRealData(String itemId, String value, String time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
     }
 
-    public Double getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(String value) {
         this.value = value;
     }
 
@@ -48,11 +48,11 @@ public class RawRealData {
         this.itemId = itemId;
     }
 
-    public DateTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(DateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 }
