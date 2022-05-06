@@ -30,6 +30,7 @@ public class AppManager {
         initDb.initFinalBooleanData();
 
         initDb.initPrevRealData();
+        initDb.initPrevBooleanData();
 
         // should start processing data after starting app
         MyContext.myCache.setShouldProcessData(true);

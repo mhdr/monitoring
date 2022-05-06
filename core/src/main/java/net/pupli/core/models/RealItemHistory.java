@@ -22,7 +22,7 @@ public class RealItemHistory {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
-        this.partitionKey = String.format("%d%d", time.year().get(), time.monthOfYear().get());
+        this.partitionKey = String.format("%d%02d", time.year().get(), time.monthOfYear().get());
     }
 
     public RealItemHistory() {

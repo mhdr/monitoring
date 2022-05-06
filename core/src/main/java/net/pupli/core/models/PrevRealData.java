@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class PrevRealData {
 
     @Id
-    // this is the itemId that we use it here as id
     private String id;
 
     @Indexed

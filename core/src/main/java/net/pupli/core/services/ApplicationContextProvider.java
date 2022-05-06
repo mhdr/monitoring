@@ -7,6 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -15,6 +16,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         MyContext.mongoTemplate = applicationContext.getBean(MongoTemplate.class);
         MyContext.amqpTemplate = (AmqpTemplate) applicationContext.getBean("rabbitTemplate");
+        MyContext.redisTemplate = applicationContext.getBean(StringRedisTemplate.class);
         MyContext.monitoringItemRepository = applicationContext.getBean(MonitoringItemRepository.class);
         MyContext.myCache = applicationContext.getBean(MyCache.class);
         MyContext.rawRealDataRepository = applicationContext.getBean(RawRealDataRepository.class);
@@ -23,6 +25,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
         MyContext.finalRealDataRepository = applicationContext.getBean(FinalRealDataRepository.class);
         MyContext.finalBooleanDataRepository = applicationContext.getBean(FinalBooleanDataRepository.class);
         MyContext.prevRealDataRepository = applicationContext.getBean(PrevRealDataRepository.class);
+        MyContext.prevBooleanDataRepository = applicationContext.getBean(PrevBooleanDataRepository.class);
         MyContext.realItemHistoryRepository = applicationContext.getBean(RealItemHistoryRepository.class);
         MyContext.realItemHistoryWeekRepository = applicationContext.getBean(RealItemHistoryWeekRepository.class);
     }

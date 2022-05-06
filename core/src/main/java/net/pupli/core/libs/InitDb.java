@@ -30,21 +30,6 @@ public class InitDb {
         MyContext.finalRealDataRepository.saveAll(realDataList);
     }
 
-    public void initPrevRealData() {
-        MyContext.prevRealDataRepository.deleteAll();
-
-        var dataList = new ArrayList<PrevRealData>();
-
-        MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
-            if (monitoringItem.getItemType() == 2) {
-                PrevRealData newData = new PrevRealData(monitoringItem.getId());
-                dataList.add(newData);
-            }
-        });
-
-        MyContext.prevRealDataRepository.saveAll(dataList);
-    }
-
     public void initFinalBooleanData() {
         MyContext.finalBooleanDataRepository.deleteAll();
 
@@ -59,5 +44,35 @@ public class InitDb {
         });
 
         MyContext.finalBooleanDataRepository.saveAll(booleanDataList);
+    }
+
+    public void initPrevRealData() {
+        MyContext.prevRealDataRepository.deleteAll();
+
+        var dataList = new ArrayList<PrevRealData>();
+
+        MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
+            if (monitoringItem.getItemType() == 2) {
+                var newData = new PrevRealData(monitoringItem.getId());
+                dataList.add(newData);
+            }
+        });
+
+        MyContext.prevRealDataRepository.saveAll(dataList);
+    }
+
+    public void initPrevBooleanData() {
+        MyContext.prevBooleanDataRepository.deleteAll();
+
+        var dataList = new ArrayList<PrevBooleanData>();
+
+        MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
+            if (monitoringItem.getItemType() == 2) {
+                var newData = new PrevBooleanData(monitoringItem.getId());
+                dataList.add(newData);
+            }
+        });
+
+        MyContext.prevBooleanDataRepository.saveAll(dataList);
     }
 }

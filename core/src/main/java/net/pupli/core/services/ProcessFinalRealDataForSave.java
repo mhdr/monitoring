@@ -19,8 +19,7 @@ import java.util.concurrent.Executors;
 // when we should save data on items history collection?
 // 1 - after interval elapsed => we will detect it here
 // 2 - if current data changes alarm flag => we can not detect it here on this class
-// 3 - onChange data for boolean data => we will detect it here
-// so we detect if data should be saved on items history ( 1 or 3 ) then send it to appropriate queue
+// so we detect if data should be saved on items history and then save it
 public class ProcessFinalRealDataForSave implements CommandLineRunner {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
