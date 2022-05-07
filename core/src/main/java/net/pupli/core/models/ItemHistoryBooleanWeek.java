@@ -6,25 +6,24 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
-@Document(collection = "real_items_history_week")
+@Document(collection = "items_history_boolean_week")
 // use this collection for caching items for a week
 // first sort by itemId then sort by time, sort by item is descending because it's better to have recent data on top
 @CompoundIndexes({@CompoundIndex(name = "itemId_time", def = "{'itemId' : 1, 'time' : -1}")})
-public class RealItemHistoryWeek {
+public class ItemHistoryBooleanWeek {
     @Id
     private String id;
     private String itemId;
-    private Double value;
+    private Boolean value;
     private DateTime time;
 
-    public RealItemHistoryWeek(String itemId, Double value, DateTime time) {
+    public ItemHistoryBooleanWeek() {
+    }
+
+    public ItemHistoryBooleanWeek(String itemId, Boolean value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
-    }
-
-    public RealItemHistoryWeek() {
     }
 
     public String getId() {
@@ -43,11 +42,11 @@ public class RealItemHistoryWeek {
         this.itemId = itemId;
     }
 
-    public Double getValue() {
+    public Boolean getValue() {
         return value;
     }
 
-    public void setValue(Double value) {
+    public void setValue(Boolean value) {
         this.value = value;
     }
 

@@ -19,6 +19,8 @@ public class MyContext {
     public static FinalBooleanDataRepository finalBooleanDataRepository = null;
     public static PrevRealDataRepository prevRealDataRepository = null;
     public static PrevBooleanDataRepository prevBooleanDataRepository = null;
-    public static RealItemHistoryRepository realItemHistoryRepository = null;
-    public static RealItemHistoryWeekRepository realItemHistoryWeekRepository = null;
+    public static ItemHistoryRealRepository itemHistoryRealRepository = null;
+    public static ItemHistoryRealWeekRepository itemHistoryRealWeekRepository = null;
+    public static ItemHistoryBooleanRepository itemHistoryBooleanRepository = null;
+    public static ItemHistoryBooleanWeekRepository itemHistoryBooleanWeekRepository = null;
 }

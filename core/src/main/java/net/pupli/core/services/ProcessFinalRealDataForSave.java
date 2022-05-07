@@ -1,8 +1,8 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
-import net.pupli.core.models.RealItemHistory;
-import net.pupli.core.models.RealItemHistoryWeek;
+import net.pupli.core.models.ItemHistoryReal;
+import net.pupli.core.models.ItemHistoryRealWeek;
 import org.joda.time.Seconds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,8 +34,8 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                         var finalRealDataList = MyContext.finalRealDataRepository.findAll();
                         var prevRealDataList = MyContext.prevRealDataRepository.findAll();
 
-                        var newItemsHistory = new ArrayList<RealItemHistory>();
-                        var newItemsHistoryWeek = new ArrayList<RealItemHistoryWeek>();
+                        var newItemsHistory = new ArrayList<ItemHistoryReal>();
+                        var newItemsHistoryWeek = new ArrayList<ItemHistoryRealWeek>();
 
                         for (var data : finalRealDataList) {
                             try {
@@ -57,12 +57,12 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                         // prev data is null so we should just save current data
 
                                         // add new item history
-                                        RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistory.add(realItemHistory);
+                                        ItemHistoryReal itemHistoryReal = new ItemHistoryReal(data.getItemId(), data.getValue(), data.getTime());
+                                        newItemsHistory.add(itemHistoryReal);
 
                                         // add new item history for week
-                                        RealItemHistoryWeek realItemHistoryWeek = new RealItemHistoryWeek(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistoryWeek.add(realItemHistoryWeek);
+                                        ItemHistoryRealWeek itemHistoryRealWeek = new ItemHistoryRealWeek(data.getItemId(), data.getValue(), data.getTime());
+                                        newItemsHistoryWeek.add(itemHistoryRealWeek);
 
                                         // update prev data
                                         prevDataValue.setValue(data.getValue());
@@ -77,12 +77,12 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                                         var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
                                         if (diff.getSeconds() > item.getInterval()) {
                                             // add new item history
-                                            RealItemHistory realItemHistory = new RealItemHistory(data.getItemId(), data.getValue(), data.getTime());
-                                            newItemsHistory.add(realItemHistory);
+                                            ItemHistoryReal itemHistoryReal = new ItemHistoryReal(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistory.add(itemHistoryReal);
 
                                             // add new item history for week
-                                            RealItemHistoryWeek realItemHistoryWeek = new RealItemHistoryWeek(data.getItemId(), data.getValue(), data.getTime());
-                                            newItemsHistoryWeek.add(realItemHistoryWeek);
+                                            ItemHistoryRealWeek itemHistoryRealWeek = new ItemHistoryRealWeek(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistoryWeek.add(itemHistoryRealWeek);
 
                                             // update prev data
                                             prevDataValue.setValue(data.getValue());
@@ -96,8 +96,8 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                         }
 
 
-                        MyContext.realItemHistoryRepository.saveAll(newItemsHistory);
-                        MyContext.realItemHistoryWeekRepository.saveAll(newItemsHistoryWeek);
+                        MyContext.itemHistoryRealRepository.saveAll(newItemsHistory);
+                        MyContext.itemHistoryRealWeekRepository.saveAll(newItemsHistoryWeek);
                         MyContext.prevRealDataRepository.saveAll(prevRealDataList);
 
                     } catch (Exception ex) {

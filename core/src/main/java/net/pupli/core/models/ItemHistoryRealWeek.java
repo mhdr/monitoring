@@ -5,27 +5,26 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.index.Indexed;
 
-@Document(collection = "real_items_history")
+
+@Document(collection = "items_history_real_week")
+// use this collection for caching items for a week
 // first sort by itemId then sort by time, sort by item is descending because it's better to have recent data on top
-@CompoundIndexes({@CompoundIndex(name = "itemId_partitionKey_time", def = "{'itemId' : 1, partitionKey : -1, 'time' : -1}")})
-public class RealItemHistory {
+@CompoundIndexes({@CompoundIndex(name = "itemId_time", def = "{'itemId' : 1, 'time' : -1}")})
+public class ItemHistoryRealWeek {
     @Id
     private String id;
     private String itemId;
-    private String partitionKey;
     private Double value;
     private DateTime time;
 
-    public RealItemHistory(String itemId, Double value, DateTime time) {
+    public ItemHistoryRealWeek(String itemId, Double value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
-        this.partitionKey = String.format("%d%02d", time.year().get(), time.monthOfYear().get());
     }
 
-    public RealItemHistory() {
+    public ItemHistoryRealWeek() {
     }
 
     public String getId() {
@@ -42,14 +41,6 @@ public class RealItemHistory {
 
     public void setItemId(String itemId) {
         this.itemId = itemId;
-    }
-
-    public String getPartitionKey() {
-        return partitionKey;
-    }
-
-    public void setPartitionKey(String partitionKey) {
-        this.partitionKey = partitionKey;
     }
 
     public Double getValue() {
