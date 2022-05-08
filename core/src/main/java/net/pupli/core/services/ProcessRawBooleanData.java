@@ -43,8 +43,8 @@ public class ProcessRawBooleanData implements CommandLineRunner {
 
                                         if (rawData.getTime() != null && !rawData.getTime().isEmpty() &&
                                                 rawData.getValue() != null && !rawData.getValue().isEmpty()) {
-                                            DateTime t = DateTime.parse(rawData.getTime());
-                                            Boolean v = Boolean.parseBoolean(rawData.getValue());
+                                            var t = DateTime.parse(rawData.getTime());
+                                            var v = Objects.equals(rawData.getValue(), "1");
 
                                             data.setValue(v);
                                             data.setTime(t);
