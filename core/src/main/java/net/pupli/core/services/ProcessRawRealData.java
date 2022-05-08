@@ -33,29 +33,28 @@ public class ProcessRawRealData implements CommandLineRunner {
                             var rawDataList = MyContext.rawRealDataRepository.findAll();
                             var dataList = MyContext.finalRealDataRepository.findAll();
 
-                            for (var rawData : rawDataList) {
-                                var optionalData = dataList.stream()
-                                        .filter(x -> Objects.equals(x.getItemId(), rawData.getItemId())).findFirst();
+                            rawDataList.parallelStream().forEach(rawData -> {
+                                try {
+                                    var optionalData = dataList.stream()
+                                            .filter(x -> Objects.equals(x.getItemId(), rawData.getItemId())).findFirst();
 
-                                // check if data is available on final data collection
-                                if (optionalData.isPresent()) {
-                                    var data = optionalData.get();
+                                    // check if data is available on final data collection
+                                    if (optionalData.isPresent()) {
+                                        var data = optionalData.get();
 
-                                    if (rawData.getTime() == null || rawData.getTime().isEmpty()) {
-                                        continue;
+                                        if (rawData.getTime() != null && !rawData.getTime().isEmpty() &&
+                                                rawData.getValue() != null && !rawData.getValue().isEmpty()) {
+                                            DateTime t = DateTime.parse(rawData.getTime());
+                                            Double v = Double.parseDouble(rawData.getValue());
+
+                                            data.setValue(v);
+                                            data.setTime(t);
+                                        }
                                     }
-
-                                    if (rawData.getValue() == null || rawData.getValue().isEmpty()) {
-                                        continue;
-                                    }
-
-                                    DateTime t = DateTime.parse(rawData.getTime());
-                                    Double v = Double.parseDouble(rawData.getValue());
-
-                                    data.setValue(v);
-                                    data.setTime(t);
+                                } catch (Exception ex) {
+                                    logger.error(ex.getMessage(), ex);
                                 }
-                            }
+                            });
 
                             MyContext.finalRealDataRepository.saveAll(dataList);
                         }

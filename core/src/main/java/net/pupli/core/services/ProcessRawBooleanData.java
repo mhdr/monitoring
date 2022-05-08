@@ -32,29 +32,28 @@ public class ProcessRawBooleanData implements CommandLineRunner {
                             var rawDataList = MyContext.rawBooleanDataRepository.findAll();
                             var dataList = MyContext.finalBooleanDataRepository.findAll();
 
-                            for (var rawData : rawDataList) {
-                                var optionalData = dataList.stream()
-                                        .filter(x -> Objects.equals(x.getItemId(), rawData.getItemId())).findFirst();
+                            rawDataList.parallelStream().forEach(rawData -> {
+                                try {
+                                    var optionalData = dataList.stream()
+                                            .filter(x -> Objects.equals(x.getItemId(), rawData.getItemId())).findFirst();
 
-                                // check if data is available on final data collection then update it
-                                if (optionalData.isPresent()) {
-                                    var data = optionalData.get();
+                                    // check if data is available on final data collection then update it
+                                    if (optionalData.isPresent()) {
+                                        var data = optionalData.get();
 
-                                    if (rawData.getTime() == null || rawData.getTime().isEmpty()) {
-                                        continue;
+                                        if (rawData.getTime() != null && !rawData.getTime().isEmpty() &&
+                                                rawData.getValue() != null && !rawData.getValue().isEmpty()) {
+                                            DateTime t = DateTime.parse(rawData.getTime());
+                                            Boolean v = Boolean.parseBoolean(rawData.getValue());
+
+                                            data.setValue(v);
+                                            data.setTime(t);
+                                        }
                                     }
-
-                                    if (rawData.getValue() == null || rawData.getValue().isEmpty()) {
-                                        continue;
-                                    }
-
-                                    DateTime t = DateTime.parse(rawData.getTime());
-                                    Boolean v = Boolean.parseBoolean(rawData.getValue());
-
-                                    data.setValue(v);
-                                    data.setTime(t);
+                                } catch (Exception ex) {
+                                    logger.error(ex.getMessage(), ex);
                                 }
-                            }
+                            });
 
                             MyContext.finalBooleanDataRepository.saveAll(dataList);
                         }
