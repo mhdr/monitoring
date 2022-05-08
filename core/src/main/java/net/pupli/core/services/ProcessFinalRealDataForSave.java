@@ -37,58 +37,59 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                         var newItemsHistory = new ArrayList<ItemHistoryReal>();
                         var newItemsHistoryWeek = new ArrayList<ItemHistoryRealWeek>();
 
-                        for (var data : finalRealDataList) {
+                        finalRealDataList.parallelStream().forEach(data -> {
                             try {
+                                // if data is null we should not process
+                                if (data.getValue() != null && data.getTime() != null) {
 
-                                if (data.getValue() == null || data.getTime() == null) {
-                                    continue;
-                                }
+                                    var prevData = prevRealDataList
+                                            .stream()
+                                            .filter(x -> Objects.equals(x.getItemId(), data.getItemId()))
+                                            .findFirst();
 
-                                var prevData = prevRealDataList
-                                        .stream()
-                                        .filter(x -> Objects.equals(x.getItemId(), data.getItemId()))
-                                        .findFirst();
+                                    var shouldSave = false;
 
-                                var shouldSave = false;
+                                    if (prevData.isPresent()) {
+                                        // if prev data is available we should check the last time we saved data
+                                        var prevDataValue = prevData.get();
 
-                                if (prevData.isPresent()) {
-                                    // if prev data is available we should check the last time we saved data
-                                    var prevDataValue = prevData.get();
-
-                                    if (prevDataValue.getValue() == null || prevDataValue.getTime() == null) {
-                                        // prev data is null so we should just save current data
-                                        shouldSave = true;
-                                    } else {
-
-                                        // we should check whether we should save data or not
-                                        // saving data is based on interval
-
-                                        var item = MyContext.myCache.getItems().get(data.getItemId());
-
-                                        var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
-                                        if (diff.getSeconds() > item.getInterval()) {
+                                        if (prevDataValue.getValue() == null || prevDataValue.getTime() == null) {
+                                            // prev data is null so we should just save current data
                                             shouldSave = true;
+                                        } else {
+
+                                            // we should check whether we should save data or not
+                                            // saving data is based on interval
+
+                                            var item = MyContext.myCache.getItems().get(data.getItemId());
+
+                                            var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
+                                            if (diff.getSeconds() > item.getInterval()) {
+                                                shouldSave = true;
+                                            }
+                                        }
+
+                                        if (shouldSave) {
+                                            // add new item history
+                                            ItemHistoryReal itemHistoryReal = new ItemHistoryReal(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistory.add(itemHistoryReal);
+
+                                            // add new item history for week
+                                            ItemHistoryRealWeek itemHistoryRealWeek = new ItemHistoryRealWeek(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistoryWeek.add(itemHistoryRealWeek);
+
+                                            // update prev data
+                                            prevDataValue.setValue(data.getValue());
+                                            prevDataValue.setTime(data.getTime());
                                         }
                                     }
 
-                                    if (shouldSave) {
-                                        // add new item history
-                                        ItemHistoryReal itemHistoryReal = new ItemHistoryReal(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistory.add(itemHistoryReal);
-
-                                        // add new item history for week
-                                        ItemHistoryRealWeek itemHistoryRealWeek = new ItemHistoryRealWeek(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistoryWeek.add(itemHistoryRealWeek);
-
-                                        // update prev data
-                                        prevDataValue.setValue(data.getValue());
-                                        prevDataValue.setTime(data.getTime());
-                                    }
                                 }
+
                             } catch (Exception ex) {
                                 logger.error(ex.getMessage(), ex);
                             }
-                        }
+                        });
 
                         MyContext.itemHistoryRealRepository.saveAll(newItemsHistory);
                         MyContext.itemHistoryRealWeekRepository.saveAll(newItemsHistoryWeek);

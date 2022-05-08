@@ -39,64 +39,64 @@ public class ProcessFinalBooleanDataForSave implements CommandLineRunner {
                         var newItemsHistory = new ArrayList<ItemHistoryBoolean>();
                         var newItemsHistoryWeek = new ArrayList<ItemHistoryBooleanWeek>();
 
-                        for (var data : finalDataList) {
+                        finalDataList.parallelStream().forEach(data -> {
                             try {
-                                if (data.getValue() == null || data.getTime() == null) {
-                                    continue;
-                                }
+                                // if data is null we should not process
+                                if (data.getValue() != null && data.getTime() != null) {
 
-                                var prevData = prevDataList
-                                        .stream()
-                                        .filter(x -> Objects.equals(x.getItemId(), data.getItemId()))
-                                        .findFirst();
+                                    var prevData = prevDataList
+                                            .stream()
+                                            .filter(x -> Objects.equals(x.getItemId(), data.getItemId()))
+                                            .findFirst();
 
-                                var shouldSave = false;
+                                    var shouldSave = false;
 
-                                if (prevData.isPresent()) {
-                                    // if prev data is available we should check the last time we saved data
-                                    var prevDataValue = prevData.get();
+                                    if (prevData.isPresent()) {
+                                        // if prev data is available we should check the last time we saved data
+                                        var prevDataValue = prevData.get();
 
-                                    if (prevDataValue.getValue() == null || prevDataValue.getTime() == null) {
-                                        // prev data is null so we should just save current data
-                                        shouldSave = true;
-                                    } else {
-
-                                        // we should check whether we should save data or not
-                                        // saving data is based on interval or onChange
-
-                                        var item = MyContext.myCache.getItems().get(data.getItemId());
-
-                                        // for boolean data we should first we should check onChange
-                                        if (data.getValue() != prevDataValue.getValue()) {
+                                        if (prevDataValue.getValue() == null || prevDataValue.getTime() == null) {
+                                            // prev data is null so we should just save current data
                                             shouldSave = true;
                                         } else {
-                                            // then we should check interval
-                                            var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
-                                            if (diff.getSeconds() > item.getInterval()) {
+
+                                            // we should check whether we should save data or not
+                                            // saving data is based on interval or onChange
+
+                                            var item = MyContext.myCache.getItems().get(data.getItemId());
+
+                                            // for boolean data we should first we should check onChange
+                                            if (data.getValue() != prevDataValue.getValue()) {
                                                 shouldSave = true;
+                                            } else {
+                                                // then we should check interval
+                                                var diff = Seconds.secondsBetween(prevDataValue.getTime(), data.getTime());
+                                                if (diff.getSeconds() > item.getInterval()) {
+                                                    shouldSave = true;
+                                                }
                                             }
                                         }
-                                    }
 
-                                    if (shouldSave) {
-                                        // add new item history
-                                        var itemHistory = new ItemHistoryBoolean(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistory.add(itemHistory);
+                                        if (shouldSave) {
+                                            // add new item history
+                                            var itemHistory = new ItemHistoryBoolean(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistory.add(itemHistory);
 
-                                        // add new item history for week
-                                        var itemHistoryWeek = new ItemHistoryBooleanWeek(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistoryWeek.add(itemHistoryWeek);
+                                            // add new item history for week
+                                            var itemHistoryWeek = new ItemHistoryBooleanWeek(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistoryWeek.add(itemHistoryWeek);
 
-                                        // update prev data
-                                        prevDataValue.setValue(data.getValue());
-                                        prevDataValue.setTime(data.getTime());
+                                            // update prev data
+                                            prevDataValue.setValue(data.getValue());
+                                            prevDataValue.setTime(data.getTime());
+                                        }
                                     }
 
                                 }
                             } catch (Exception ex) {
                                 logger.error(ex.getMessage(), ex);
                             }
-                        }
+                        });
 
                         MyContext.itemHistoryBooleanRepository.saveAll(newItemsHistory);
                         MyContext.itemHistoryBooleanWeekRepository.saveAll(newItemsHistoryWeek);
