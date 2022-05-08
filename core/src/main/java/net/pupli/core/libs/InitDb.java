@@ -67,7 +67,7 @@ public class InitDb {
         var dataList = new ArrayList<PrevBooleanData>();
 
         MyContext.myCache.getItems().forEach((s, monitoringItem) -> {
-            if (monitoringItem.getItemType() == 2) {
+            if (monitoringItem.getItemType() == 1) {
                 var newData = new PrevBooleanData(monitoringItem.getId());
                 dataList.add(newData);
             }
