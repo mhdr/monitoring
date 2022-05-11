@@ -1,8 +1,10 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.FinalBooleanData;
 import net.pupli.core.models.ItemHistoryBoolean;
 import net.pupli.core.models.ItemHistoryBooleanWeek;
+import net.pupli.core.models.PrevBooleanData;
 import org.joda.time.Seconds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,6 +29,10 @@ public class ProcessFinalBooleanDataForSave implements CommandLineRunner {
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
     Logger logger = LoggerFactory.getLogger(ProcessFinalBooleanDataForSave.class);
+    private volatile List<FinalBooleanData> finalDataList;
+    private volatile List<PrevBooleanData> prevDataList;
+    private volatile ArrayList<ItemHistoryBoolean> newItemsHistory;
+    private volatile ArrayList<ItemHistoryBooleanWeek> newItemsHistoryWeek;
 
     @Override
     public void run(String... args) throws Exception {
@@ -33,11 +40,11 @@ public class ProcessFinalBooleanDataForSave implements CommandLineRunner {
             try {
                 while (true) {
                     try {
-                        var finalDataList = MyContext.finalBooleanDataRepository.findAll();
-                        var prevDataList = MyContext.prevBooleanDataRepository.findAll();
+                        finalDataList = MyContext.finalBooleanDataRepository.findAll();
+                        prevDataList = MyContext.prevBooleanDataRepository.findAll();
 
-                        var newItemsHistory = new ArrayList<ItemHistoryBoolean>();
-                        var newItemsHistoryWeek = new ArrayList<ItemHistoryBooleanWeek>();
+                        newItemsHistory = new ArrayList<ItemHistoryBoolean>();
+                        newItemsHistoryWeek = new ArrayList<ItemHistoryBooleanWeek>();
 
                         finalDataList.parallelStream().forEach(data -> {
                             try {

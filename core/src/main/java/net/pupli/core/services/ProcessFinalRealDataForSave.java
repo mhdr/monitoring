@@ -1,8 +1,10 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.FinalRealData;
 import net.pupli.core.models.ItemHistoryReal;
 import net.pupli.core.models.ItemHistoryRealWeek;
+import net.pupli.core.models.PrevRealData;
 import org.joda.time.Seconds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +12,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,6 +27,10 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
 
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
     Logger logger = LoggerFactory.getLogger(ProcessFinalRealDataForSave.class);
+    private volatile List<FinalRealData> finalRealDataList;
+    private volatile List<PrevRealData> prevRealDataList;
+    private volatile ArrayList<ItemHistoryReal> newItemsHistory;
+    private volatile ArrayList<ItemHistoryRealWeek> newItemsHistoryWeek;
 
     @Override
     public void run(String... args) throws Exception {
@@ -31,11 +38,11 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
             try {
                 while (true) {
                     try {
-                        var finalRealDataList = MyContext.finalRealDataRepository.findAll();
-                        var prevRealDataList = MyContext.prevRealDataRepository.findAll();
+                        finalRealDataList = MyContext.finalRealDataRepository.findAll();
+                        prevRealDataList = MyContext.prevRealDataRepository.findAll();
 
-                        var newItemsHistory = new ArrayList<ItemHistoryReal>();
-                        var newItemsHistoryWeek = new ArrayList<ItemHistoryRealWeek>();
+                        newItemsHistory = new ArrayList<ItemHistoryReal>();
+                        newItemsHistoryWeek = new ArrayList<ItemHistoryRealWeek>();
 
                         finalRealDataList.parallelStream().forEach(data -> {
                             try {

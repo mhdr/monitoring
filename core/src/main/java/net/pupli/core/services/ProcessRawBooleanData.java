@@ -1,12 +1,15 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.FinalBooleanData;
+import net.pupli.core.models.RawBooleanData;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -16,6 +19,9 @@ public class ProcessRawBooleanData implements CommandLineRunner {
 
     private ExecutorService executorService = Executors.newSingleThreadExecutor();
     Logger logger = LoggerFactory.getLogger(ProcessRawBooleanData.class);
+
+    private volatile List<RawBooleanData> rawDataList;
+    private volatile List<FinalBooleanData> dataList;
 
     @Override
     public void run(String... args) {
@@ -29,8 +35,8 @@ public class ProcessRawBooleanData implements CommandLineRunner {
                             // iterate through all raw data which are available in raw collection in mongodb
                             // and check if that related data is available on final data collection
                             // id data is present update it else create a new record
-                            var rawDataList = MyContext.rawBooleanDataRepository.findAll();
-                            var dataList = MyContext.finalBooleanDataRepository.findAll();
+                            rawDataList = MyContext.rawBooleanDataRepository.findAll();
+                            dataList = MyContext.finalBooleanDataRepository.findAll();
 
                             rawDataList.parallelStream().forEach(rawData -> {
                                 try {
