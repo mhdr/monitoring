@@ -29,7 +29,7 @@ public class QuartzConfig {
     public CronTriggerFactoryBean trigger(JobDetail job) {
         CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
         trigger.setJobDetail(job);
-        trigger.setCronExpression("0 0 * * *");
+        trigger.setCronExpression("0 0 0 * * ?");
 
         return trigger;
     }
