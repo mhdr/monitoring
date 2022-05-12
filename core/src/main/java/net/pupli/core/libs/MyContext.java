@@ -23,4 +23,7 @@ public class MyContext {
     public static ItemHistoryRealWeekRepository itemHistoryRealWeekRepository = null;
     public static ItemHistoryBooleanRepository itemHistoryBooleanRepository = null;
     public static ItemHistoryBooleanWeekRepository itemHistoryBooleanWeekRepository = null;
+    public static AlarmRealRepository alarmRealRepository = null;
+    public static AlarmHistoryRealRepository alarmHistoryRealRepository = null;
+
 }

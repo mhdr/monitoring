@@ -30,5 +30,7 @@ public class ApplicationContextProvider implements ApplicationContextAware {
         MyContext.itemHistoryRealWeekRepository = applicationContext.getBean(ItemHistoryRealWeekRepository.class);
         MyContext.itemHistoryBooleanRepository = applicationContext.getBean(ItemHistoryBooleanRepository.class);
         MyContext.itemHistoryBooleanWeekRepository = applicationContext.getBean(ItemHistoryBooleanWeekRepository.class);
+        MyContext.alarmRealRepository = applicationContext.getBean(AlarmRealRepository.class);
+        MyContext.alarmHistoryRealRepository = applicationContext.getBean(AlarmHistoryRealRepository.class);
     }
 }

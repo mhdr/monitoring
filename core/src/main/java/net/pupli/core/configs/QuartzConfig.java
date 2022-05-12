@@ -10,10 +10,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.scheduling.quartz.JobDetailFactoryBean;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
-import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
-import org.springframework.scheduling.quartz.SpringBeanJobFactory;
+import org.springframework.scheduling.quartz.*;
 
 
 @Configuration
@@ -29,12 +26,11 @@ public class QuartzConfig {
     }
 
     @Bean
-    public SimpleTriggerFactoryBean trigger(JobDetail job) {
-        SimpleTriggerFactoryBean trigger = new SimpleTriggerFactoryBean();
+    public CronTriggerFactoryBean trigger(JobDetail job) {
+        CronTriggerFactoryBean trigger = new CronTriggerFactoryBean();
         trigger.setJobDetail(job);
-        // every one hour
-        trigger.setRepeatInterval(60 * 60 * 1000);
-        trigger.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+        trigger.setCronExpression("0 0 * * *");
+
         return trigger;
     }
 

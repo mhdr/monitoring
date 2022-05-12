@@ -1,5 +1,7 @@
 package net.pupli.core.services;
 
+import net.pupli.core.libs.MyContext;
+import org.joda.time.DateTime;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -12,6 +14,19 @@ public class GarbageCollectorJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {
-        logger.info("Garbage Collector Job is running ...");
+        try {
+            DateTime now = DateTime.now();
+            DateTime timeBefore = now.minusDays(7);
+
+            // remove real items history before 1 week
+            var realItemsHistory = MyContext.itemHistoryRealWeekRepository.findAllByTimeBefore(timeBefore);
+            MyContext.itemHistoryRealWeekRepository.deleteAll(realItemsHistory);
+
+            // remove boolean items history before 1 week
+            var booleanItemsHistory = MyContext.itemHistoryBooleanWeekRepository.findAllByTimeBefore(timeBefore);
+            MyContext.itemHistoryBooleanWeekRepository.deleteAll(booleanItemsHistory);
+        } catch (Exception ex) {
+            logger.error(ex.getMessage(), ex);
+        }
     }
 }
