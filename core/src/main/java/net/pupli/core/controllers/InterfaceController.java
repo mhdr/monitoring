@@ -1,6 +1,5 @@
 package net.pupli.core.controllers;
 
-import net.pupli.core.dto.RequestItemsDto;
 import net.pupli.core.dto.ResponseItemsDto;
 import net.pupli.core.libs.MyContext;
 import net.pupli.core.models.InterfaceCredential;
@@ -8,7 +7,6 @@ import net.pupli.core.models.MonitoringItem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,22 +19,7 @@ import java.util.List;
 public class InterfaceController {
     Logger logger = LoggerFactory.getLogger(InterfaceController.class);
 
-    @RequestMapping(value = "/api/interface/test", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseItemsDto test(HttpServletRequest request, HttpServletResponse response, @RequestBody RequestItemsDto requestDto) {
-        try {
-
-            ResponseItemsDto responseDto = new ResponseItemsDto();
-
-            return responseDto;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
-    }
-
-    @RequestMapping(value = "/api/interface/items", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/interface/items", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseItemsDto items(HttpServletRequest request, HttpServletResponse response) {
         try {
 

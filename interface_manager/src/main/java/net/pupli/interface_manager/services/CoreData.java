@@ -39,17 +39,12 @@ public class CoreData implements CommandLineRunner {
                         ConfigFile configFile = new ConfigFile();
                         String url = configFile.getCoreWebAddress() + "/api/interface/items";
 
-                        RequestItemsDto requestDto = new RequestItemsDto();
                         Gson gson = new Gson();
-                        String json = gson.toJson(requestDto);
-
-                        MediaType mediaType = MediaType.get("application/json;");
                         OkHttpClient client = new OkHttpClient();
-                        RequestBody body = RequestBody.create(json, mediaType);
 
                         Request request = new Request.Builder()
                                 .url(url)
-                                .post(body)
+                                .get()
                                 .build();
 
                         Response response = client.newCall(request).execute();
