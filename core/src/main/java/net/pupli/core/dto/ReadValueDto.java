@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @version 3
- * @since 2019-12-14
- */
 public class ReadValueDto implements Serializable {
 
     private String credential;
