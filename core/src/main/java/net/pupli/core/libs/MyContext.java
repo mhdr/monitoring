@@ -25,5 +25,6 @@ public class MyContext {
     public static ItemHistoryBooleanWeekRepository itemHistoryBooleanWeekRepository = null;
     public static AlarmRealRepository alarmRealRepository = null;
     public static AlarmHistoryRealRepository alarmHistoryRealRepository = null;
+    public static AlarmStatusRealRepository alarmStatusRealRepository = null;
 
 }

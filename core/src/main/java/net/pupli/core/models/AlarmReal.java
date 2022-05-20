@@ -21,13 +21,24 @@ public class AlarmReal {
     private Buzzer[] buzzers;
 
     public AlarmReal(int alarmType) {
+        this.alarmType = alarmType;
+
+        // alarms are enabled by default
+        this.isDisabled = false;
+
+        // 10 seconds delay
+        this.delay = 10;
+
+        // empty message
+        this.message = "";
+
         if (alarmType == 1) {
             this.compareProps = new CompareProperties();
         } else if (alarmType == 2) {
             this.timeoutProps = new TimeoutProperties();
         }
 
-        this.alarmType = alarmType;
+        // initialize buzzers
         buzzers = new Buzzer[]{};
     }
 
