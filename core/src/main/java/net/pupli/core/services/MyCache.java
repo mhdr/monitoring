@@ -1,6 +1,7 @@
 package net.pupli.core.services;
 
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.AlarmReal;
 import net.pupli.core.models.MonitoringItem;
 import net.pupli.core.models.RawBooleanData;
 import net.pupli.core.models.RawRealData;
@@ -16,7 +17,6 @@ public class MyCache {
     private HashMap<String, RawRealData> rawRealData;
     // this flag indicates app should receive and save raw data
     private Boolean shouldProcessData = false;
-
     public Boolean getShouldProcessData() {
         return shouldProcessData;
     }

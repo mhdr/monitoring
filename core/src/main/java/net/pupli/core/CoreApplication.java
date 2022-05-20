@@ -13,8 +13,8 @@ public class CoreApplication {
     public static void main(String[] args) {
         SpringApplication.run(CoreApplication.class, args);
 
-//        Test test=new Test();
-//        test.InsertCredential();
+        //Test test = new Test();
+        //test.insertAlarmReal();
     }
 
 }

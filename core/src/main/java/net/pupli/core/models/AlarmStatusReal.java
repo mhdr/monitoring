@@ -9,17 +9,27 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class AlarmStatusReal {
     @Id
     private String id;
+    @Indexed
+    private String alarmId;
     private boolean isSuspicious;
     private DateTime suspiciousTime;
-    @Indexed
     private boolean hasAlarm;
     private DateTime alarmTime;
 
-    public AlarmStatusReal() {
+    public AlarmStatusReal(String alarmId) {
+        this.alarmId = alarmId;
         this.isSuspicious = false;
         this.suspiciousTime = null;
         this.hasAlarm = false;
         this.alarmTime = null;
+    }
+
+    public String getAlarmId() {
+        return alarmId;
+    }
+
+    public void setAlarmId(String alarmId) {
+        this.alarmId = alarmId;
     }
 
     public String getId() {

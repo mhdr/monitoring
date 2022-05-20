@@ -14,7 +14,6 @@ public class AlarmReal {
     // 2 => timeout values
     private int alarmType;
     private boolean isDisabled;
-    private int delay;
     private String message;
     private CompareProperties compareProps;
     private TimeoutProperties timeoutProps;
@@ -25,9 +24,6 @@ public class AlarmReal {
 
         // alarms are enabled by default
         this.isDisabled = false;
-
-        // 10 seconds delay
-        this.delay = 10;
 
         // empty message
         this.message = "";
@@ -74,14 +70,6 @@ public class AlarmReal {
         isDisabled = disabled;
     }
 
-    public int getDelay() {
-        return delay;
-    }
-
-    public void setDelay(int delay) {
-        this.delay = delay;
-    }
-
     public String getMessage() {
         return message;
     }
@@ -122,11 +110,70 @@ public class AlarmReal {
         private Double value;
         // use this value for between compare type
         private Double value2;
+        private int delay;
+
+        public CompareProperties(int compareType, Double value, Double value2, int delay) {
+            this.compareType = compareType;
+            this.value = value;
+            this.value2 = value2;
+            this.delay = delay;
+        }
+
+        public CompareProperties() {
+            this.delay = 10;
+        }
+
+        public int getCompareType() {
+            return compareType;
+        }
+
+        public void setCompareType(int compareType) {
+            this.compareType = compareType;
+        }
+
+        public int getDelay() {
+            return delay;
+        }
+
+        public void setDelay(int delay) {
+            this.delay = delay;
+        }
+
+        public Double getValue() {
+            return value;
+        }
+
+        public void setValue(Double value) {
+            this.value = value;
+        }
+
+        public Double getValue2() {
+            return value2;
+        }
+
+        public void setValue2(Double value2) {
+            this.value2 = value2;
+        }
     }
 
     public static class TimeoutProperties {
         // timeout value in seconds
-        private long value;
+        private int value;
+
+        public TimeoutProperties() {
+        }
+
+        public TimeoutProperties(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return value;
+        }
+
+        public void setValue(int value) {
+            this.value = value;
+        }
     }
 
     public static class Buzzer {
@@ -134,5 +181,37 @@ public class AlarmReal {
         private boolean trigger;
         private boolean isSilent;
         private int delay;
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public boolean isTrigger() {
+            return trigger;
+        }
+
+        public void setTrigger(boolean trigger) {
+            this.trigger = trigger;
+        }
+
+        public boolean isSilent() {
+            return isSilent;
+        }
+
+        public void setSilent(boolean silent) {
+            isSilent = silent;
+        }
+
+        public int getDelay() {
+            return delay;
+        }
+
+        public void setDelay(int delay) {
+            this.delay = delay;
+        }
     }
 }

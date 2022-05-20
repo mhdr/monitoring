@@ -2,6 +2,7 @@ package net.pupli.core.services;
 
 import net.pupli.core.configs.AppConfig;
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.AlarmReal;
 import net.pupli.core.models.InterfaceCredential;
 import net.pupli.core.models.MonitoringItem;
 import org.joda.time.DateTime;
@@ -15,6 +16,23 @@ public class Test {
     public Test() {
         ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
         myCache = context.getBean(MyCache.class);
+    }
+
+    public void insertAlarmReal() {
+        AlarmReal alarmReal1 = new AlarmReal(1);
+        alarmReal1.setItemId("6245c866996098751ac96b46");
+        alarmReal1.setMessage("CPU Usage is High");
+        AlarmReal.CompareProperties compareProperties = new AlarmReal.CompareProperties(2, 50.0, null, 30);
+        alarmReal1.setCompareProps(compareProperties);
+
+        AlarmReal alarmReal2 = new AlarmReal(2);
+        alarmReal2.setItemId("6245c866996098751ac96b46");
+        alarmReal2.setMessage("Timeout reading CPU Usage");
+        AlarmReal.TimeoutProperties timeoutProperties = new AlarmReal.TimeoutProperties();
+        alarmReal2.setTimeoutProps(timeoutProperties);
+
+        MyContext.alarmRealRepository.insert(alarmReal1);
+        MyContext.alarmRealRepository.insert(alarmReal2);
     }
 
     public void InsertCredential() {

@@ -32,6 +32,8 @@ public class AppManager {
         initDb.initPrevRealData();
         initDb.initPrevBooleanData();
 
+        initDb.initAlarmStatusReal();
+
         // should start processing data after starting app
         MyContext.myCache.setShouldProcessData(true);
         logger.info("Started data processing...");

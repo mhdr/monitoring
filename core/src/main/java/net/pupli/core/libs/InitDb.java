@@ -3,6 +3,7 @@ package net.pupli.core.libs;
 import net.pupli.core.models.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class InitDb {
 
@@ -74,5 +75,22 @@ public class InitDb {
         });
 
         MyContext.prevBooleanDataRepository.saveAll(dataList);
+    }
+
+    public void initAlarmStatusReal() {
+        var dataList = MyContext.alarmStatusRealRepository.findAll();
+        var alarms = MyContext.alarmRealRepository.findAll();
+
+        alarms.forEach(alarmReal -> {
+
+            var alarmStatus = dataList.stream().filter(x -> Objects.equals(x.getAlarmId(), alarmReal.getId())).findFirst();
+
+            if (alarmStatus.isEmpty()) {
+                var alarmStatusValue = new AlarmStatusReal(alarmReal.getId());
+                dataList.add(alarmStatusValue);
+            }
+        });
+
+        MyContext.alarmStatusRealRepository.saveAll(dataList);
     }
 }

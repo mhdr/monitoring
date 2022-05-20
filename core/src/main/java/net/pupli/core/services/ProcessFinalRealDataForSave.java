@@ -41,8 +41,8 @@ public class ProcessFinalRealDataForSave implements CommandLineRunner {
                         finalRealDataList = MyContext.finalRealDataRepository.findAll();
                         prevRealDataList = MyContext.prevRealDataRepository.findAll();
 
-                        newItemsHistory = new ArrayList<ItemHistoryReal>();
-                        newItemsHistoryWeek = new ArrayList<ItemHistoryRealWeek>();
+                        newItemsHistory = new ArrayList<>();
+                        newItemsHistoryWeek = new ArrayList<>();
 
                         finalRealDataList.parallelStream().forEach(data -> {
                             try {
