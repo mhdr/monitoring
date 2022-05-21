@@ -40,113 +40,116 @@ public class ProcessFinalRealDataForAlarm implements CommandLineRunner {
                         alarmsHistory = new ArrayList<>();
 
                         finalRealDataList.parallelStream().forEach(data -> {
-
-                            if (data.getValue() != null) {
-                                var alarmsForCurrent = alarms
-                                        .stream()
-                                        .filter(x -> Objects.equals(x.getItemId(), data.getItemId()))
-                                        .toList();
-
-                                alarmsForCurrent.forEach(alarm -> {
-
-                                    var hasAlarm = false;
-                                    var shouldSave = false;
-                                    var alarmStatus = alarmsStatus
+                            try {
+                                if (data.getValue() != null) {
+                                    var alarmsForCurrent = alarms
                                             .stream()
-                                            .filter(x -> Objects.equals(x.getAlarmId(), alarm.getId()))
-                                            .findFirst();
+                                            .filter(x -> Objects.equals(x.getItemId(), data.getItemId()))
+                                            .toList();
 
-                                    if (alarmStatus.isPresent()) {
-                                        var alarmStatusValue = alarmStatus.get();
+                                    alarmsForCurrent.forEach(alarm -> {
 
-                                        // 1 => compare values
-                                        if (alarm.getAlarmType() == 1) {
-                                            // 1 => lower
-                                            if (alarm.getCompareProps().getCompareType() == 1) {
-                                                if (data.getValue() < alarm.getCompareProps().getValue()) {
-                                                    hasAlarm = true;
-                                                }
-                                            }
-                                            // 2 => higher
-                                            else if (alarm.getCompareProps().getCompareType() == 2) {
-                                                if (data.getValue() > alarm.getCompareProps().getValue()) {
-                                                    hasAlarm = true;
-                                                }
-                                            }
-                                            // 3 => between
-                                            else if (alarm.getCompareProps().getCompareType() == 3) {
-                                                if (data.getValue() > alarm.getCompareProps().getValue() &&
-                                                        data.getValue() < alarm.getCompareProps().getValue2()) {
-                                                    hasAlarm = true;
-                                                }
-                                            }
+                                        var hasAlarm = false;
+                                        var shouldSave = false;
+                                        var alarmStatus = alarmsStatus
+                                                .stream()
+                                                .filter(x -> Objects.equals(x.getAlarmId(), alarm.getId()))
+                                                .findFirst();
 
-                                            if (hasAlarm) {
-                                                if (!alarmStatusValue.isSuspicious()) {
-                                                    alarmStatusValue.setSuspicious(true);
-                                                    alarmStatusValue.setSuspiciousTime(DateTime.now());
-                                                } else {
-                                                    if (alarmStatusValue.getSuspiciousTime()
-                                                            .plusSeconds(alarm.getCompareProps().getDelay())
-                                                            .isBeforeNow()) {
-                                                        if (!alarmStatusValue.isHasAlarm()) {
-                                                            alarmStatusValue.setHasAlarm(true);
-                                                            alarmStatusValue.setAlarmTime(DateTime.now());
-                                                            shouldSave = true;
-                                                        }
+                                        if (alarmStatus.isPresent()) {
+                                            var alarmStatusValue = alarmStatus.get();
+
+                                            // 1 => compare values
+                                            if (alarm.getAlarmType() == 1) {
+                                                // 1 => lower
+                                                if (alarm.getCompareProps().getCompareType() == 1) {
+                                                    if (data.getValue() < alarm.getCompareProps().getValue()) {
+                                                        hasAlarm = true;
                                                     }
                                                 }
-                                            } else {
-                                                if (alarmStatusValue.isHasAlarm()) {
-                                                    alarmStatusValue.setSuspicious(false);
-                                                    alarmStatusValue.setSuspiciousTime(null);
-                                                    alarmStatusValue.setHasAlarm(false);
-                                                    alarmStatusValue.setAlarmTime(null);
-                                                    shouldSave = true;
+                                                // 2 => higher
+                                                else if (alarm.getCompareProps().getCompareType() == 2) {
+                                                    if (data.getValue() > alarm.getCompareProps().getValue()) {
+                                                        hasAlarm = true;
+                                                    }
+                                                }
+                                                // 3 => between
+                                                else if (alarm.getCompareProps().getCompareType() == 3) {
+                                                    if (data.getValue() > alarm.getCompareProps().getValue() &&
+                                                            data.getValue() < alarm.getCompareProps().getValue2()) {
+                                                        hasAlarm = true;
+                                                    }
+                                                }
+
+                                                if (hasAlarm) {
+                                                    if (!alarmStatusValue.isSuspicious()) {
+                                                        alarmStatusValue.setSuspicious(true);
+                                                        alarmStatusValue.setSuspiciousTime(DateTime.now());
+                                                    } else {
+                                                        if (alarmStatusValue.getSuspiciousTime()
+                                                                .plusSeconds(alarm.getCompareProps().getDelay())
+                                                                .isBeforeNow()) {
+                                                            if (!alarmStatusValue.isHasAlarm()) {
+                                                                alarmStatusValue.setHasAlarm(true);
+                                                                alarmStatusValue.setAlarmTime(DateTime.now());
+                                                                shouldSave = true;
+                                                            }
+                                                        }
+                                                    }
+                                                } else {
+                                                    if (alarmStatusValue.isHasAlarm()) {
+                                                        alarmStatusValue.setSuspicious(false);
+                                                        alarmStatusValue.setSuspiciousTime(null);
+                                                        alarmStatusValue.setHasAlarm(false);
+                                                        alarmStatusValue.setAlarmTime(null);
+                                                        shouldSave = true;
+                                                    }
+                                                }
+                                            }
+                                            // 2 => timeout values
+                                            else if (alarm.getAlarmType() == 2) {
+                                                if (data.getTime().plusSeconds(alarm.getTimeoutProps().getValue()).isBeforeNow()) {
+                                                    hasAlarm = true;
+                                                }
+
+                                                if (hasAlarm) {
+                                                    if (!alarmStatusValue.isHasAlarm()) {
+                                                        alarmStatusValue.setSuspicious(true);
+                                                        alarmStatusValue.setSuspiciousTime(DateTime.now());
+                                                        alarmStatusValue.setHasAlarm(true);
+                                                        alarmStatusValue.setAlarmTime(DateTime.now());
+                                                        shouldSave = true;
+                                                    }
+                                                } else {
+                                                    if (alarmStatusValue.isHasAlarm()) {
+                                                        alarmStatusValue.setSuspicious(false);
+                                                        alarmStatusValue.setSuspiciousTime(null);
+                                                        alarmStatusValue.setHasAlarm(false);
+                                                        alarmStatusValue.setAlarmTime(null);
+                                                        shouldSave = true;
+                                                    }
                                                 }
                                             }
                                         }
-                                        // 2 => timeout values
-                                        else if (alarm.getAlarmType() == 2) {
-                                            if (data.getTime().plusSeconds(alarm.getTimeoutProps().getValue()).isBeforeNow()) {
-                                                hasAlarm = true;
-                                            }
 
-                                            if (hasAlarm) {
-                                                if (!alarmStatusValue.isHasAlarm()) {
-                                                    alarmStatusValue.setSuspicious(true);
-                                                    alarmStatusValue.setSuspiciousTime(DateTime.now());
-                                                    alarmStatusValue.setHasAlarm(true);
-                                                    alarmStatusValue.setAlarmTime(DateTime.now());
-                                                    shouldSave = true;
-                                                }
-                                            } else {
-                                                if (alarmStatusValue.isHasAlarm()) {
-                                                    alarmStatusValue.setSuspicious(false);
-                                                    alarmStatusValue.setSuspiciousTime(null);
-                                                    alarmStatusValue.setHasAlarm(false);
-                                                    alarmStatusValue.setAlarmTime(null);
-                                                    shouldSave = true;
-                                                }
-                                            }
+                                        if (shouldSave) {
+                                            // add new item history
+                                            ItemHistoryReal itemHistoryReal = new ItemHistoryReal(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistory.add(itemHistoryReal);
+
+                                            // add new item history for week
+                                            ItemHistoryRealWeek itemHistoryRealWeek = new ItemHistoryRealWeek(data.getItemId(), data.getValue(), data.getTime());
+                                            newItemsHistoryWeek.add(itemHistoryRealWeek);
+
+                                            // add new alarm history
+                                            AlarmHistoryReal alarmHistoryReal = new AlarmHistoryReal(alarm.getId(), hasAlarm, DateTime.now());
+                                            alarmsHistory.add(alarmHistoryReal);
                                         }
-                                    }
 
-                                    if (shouldSave) {
-                                        // add new item history
-                                        ItemHistoryReal itemHistoryReal = new ItemHistoryReal(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistory.add(itemHistoryReal);
-
-                                        // add new item history for week
-                                        ItemHistoryRealWeek itemHistoryRealWeek = new ItemHistoryRealWeek(data.getItemId(), data.getValue(), data.getTime());
-                                        newItemsHistoryWeek.add(itemHistoryRealWeek);
-
-                                        // add new alarm history
-                                        AlarmHistoryReal alarmHistoryReal = new AlarmHistoryReal(alarm.getId(), hasAlarm, DateTime.now());
-                                        alarmsHistory.add(alarmHistoryReal);
-                                    }
-
-                                });
+                                    });
+                                }
+                            } catch (Exception ex) {
+                                logger.error(ex.getMessage(), ex);
                             }
                         });
 
