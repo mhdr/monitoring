@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 deploy_dir=/opt/monitoringv5/core
 service_name=monitoringv5_core.service

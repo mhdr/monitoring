@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 deploy_dir=/opt/monitoringv5/interface_manager
 service_name=monitoringv5_interface_manager.service

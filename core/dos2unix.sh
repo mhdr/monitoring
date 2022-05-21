@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 dos2unix manager.sh
 chmod +x manager.sh
