@@ -11,7 +11,7 @@ public class PrevBooleanData {
     private String id;
     @Indexed
     private String itemId;
-    private Boolean value;
+    private Integer value;
     private DateTime time;
 
     public PrevBooleanData(String itemId) {
@@ -37,11 +37,11 @@ public class PrevBooleanData {
         this.itemId = itemId;
     }
 
-    public Boolean getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

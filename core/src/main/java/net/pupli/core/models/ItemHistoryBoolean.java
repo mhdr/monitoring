@@ -14,10 +14,10 @@ public class ItemHistoryBoolean {
     private String id;
     private String itemId;
     private String partitionKey;
-    private Boolean value;
+    private Integer value;
     private DateTime time;
 
-    public ItemHistoryBoolean(String itemId, Boolean value, DateTime time) {
+    public ItemHistoryBoolean(String itemId, Integer value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
@@ -51,11 +51,11 @@ public class ItemHistoryBoolean {
         this.partitionKey = partitionKey;
     }
 
-    public Boolean getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

@@ -11,7 +11,7 @@ public class FinalBooleanData {
     private String id;
     @Indexed
     private String itemId;
-    private Boolean value;
+    private Integer value;
     private DateTime time;
 
     public FinalBooleanData() {
@@ -21,7 +21,7 @@ public class FinalBooleanData {
         this.itemId = itemId;
     }
 
-    public FinalBooleanData(String itemId, Boolean value, DateTime time) {
+    public FinalBooleanData(String itemId, Integer value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
@@ -43,11 +43,11 @@ public class FinalBooleanData {
         this.itemId = itemId;
     }
 
-    public Boolean getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 

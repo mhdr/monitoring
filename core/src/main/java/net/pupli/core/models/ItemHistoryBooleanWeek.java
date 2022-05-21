@@ -14,13 +14,13 @@ public class ItemHistoryBooleanWeek {
     @Id
     private String id;
     private String itemId;
-    private Boolean value;
+    private Integer value;
     private DateTime time;
 
     public ItemHistoryBooleanWeek() {
     }
 
-    public ItemHistoryBooleanWeek(String itemId, Boolean value, DateTime time) {
+    public ItemHistoryBooleanWeek(String itemId, Integer value, DateTime time) {
         this.itemId = itemId;
         this.value = value;
         this.time = time;
@@ -42,11 +42,11 @@ public class ItemHistoryBooleanWeek {
         this.itemId = itemId;
     }
 
-    public Boolean getValue() {
+    public Integer getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(Integer value) {
         this.value = value;
     }
 
