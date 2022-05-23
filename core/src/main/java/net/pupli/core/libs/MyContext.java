@@ -26,5 +26,8 @@ public class MyContext {
     public static AlarmRealRepository alarmRealRepository = null;
     public static AlarmHistoryRealRepository alarmHistoryRealRepository = null;
     public static AlarmStatusRealRepository alarmStatusRealRepository = null;
+    public static AlarmBooleanRepository alarmBooleanRepository = null;
+    public static AlarmHistoryBooleanRepository alarmHistoryBooleanRepository = null;
+    public static AlarmStatusBooleanRepository alarmStatusBooleanRepository = null;
 
 }

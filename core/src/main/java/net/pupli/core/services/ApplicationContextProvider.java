@@ -33,5 +33,8 @@ public class ApplicationContextProvider implements ApplicationContextAware {
         MyContext.alarmRealRepository = applicationContext.getBean(AlarmRealRepository.class);
         MyContext.alarmHistoryRealRepository = applicationContext.getBean(AlarmHistoryRealRepository.class);
         MyContext.alarmStatusRealRepository = applicationContext.getBean(AlarmStatusRealRepository.class);
+        MyContext.alarmBooleanRepository = applicationContext.getBean(AlarmBooleanRepository.class);
+        MyContext.alarmHistoryBooleanRepository = applicationContext.getBean(AlarmHistoryBooleanRepository.class);
+        MyContext.alarmStatusBooleanRepository = applicationContext.getBean(AlarmStatusBooleanRepository.class);
     }
 }
