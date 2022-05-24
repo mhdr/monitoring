@@ -4,4 +4,4 @@
 npm install
 
 # build
-npm run build && gzipper c build
+npm run build --verbose && gzipper c build --verbose
