@@ -21,7 +21,7 @@ gradle build
 
 # deploy
 sudo mkdir -p ${deploy_dir}
-sudo cp build/libs/web.jar ${deploy_dir}/web.jar
+sudo cp build/libs/web_server.jar ${deploy_dir}/web_server.jar
 sudo cp run.sh ${deploy_dir}/run.sh
 sudo dos2unix ${deploy_dir}/run.sh
 sudo chmod +x ${deploy_dir}/run.sh
