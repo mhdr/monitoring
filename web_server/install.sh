@@ -12,9 +12,9 @@ pushd ${webui_dir}
     ./build.sh
 popd
 
-rm -R /src/main/resources/static/*
-mkdir -p /src/main/resources/static
-cp -R ${webui_dir}/build/* ${weblocalserver_project_dir}/src/main/resources/static
+rm -R src/main/resources/static/*
+mkdir -p src/main/resources/static
+cp -R ${webui_dir}/build/* src/main/resources/static
 
 # build
 gradle build
