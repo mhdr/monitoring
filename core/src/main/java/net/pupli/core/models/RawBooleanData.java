@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "raw_boolean_data")
 public class RawBooleanData {
     @Id

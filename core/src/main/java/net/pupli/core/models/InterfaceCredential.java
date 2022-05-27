@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.UUID;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "interface_credentials")
 public class InterfaceCredential {
 

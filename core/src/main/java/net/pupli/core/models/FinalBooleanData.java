@@ -5,6 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "final_boolean_data")
 public class FinalBooleanData {
     @Id

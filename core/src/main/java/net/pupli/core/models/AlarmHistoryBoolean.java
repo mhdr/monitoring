@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "alarms_history_boolean")
 @CompoundIndexes({@CompoundIndex(name = "alarmId_partitionKey_time", def = "{'alarmId' : 1, partitionKey : -1, 'time' : -1}")})
 public class AlarmHistoryBoolean {

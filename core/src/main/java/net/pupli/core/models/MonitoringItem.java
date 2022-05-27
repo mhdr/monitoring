@@ -4,6 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "items")
 public class MonitoringItem {
 

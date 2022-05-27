@@ -5,6 +5,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "prev_real_data")
 // previous data we saved on items history
 // we need this because we want to know when we should save new data on items history

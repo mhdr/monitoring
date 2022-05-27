@@ -6,6 +6,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "items_history_boolean")
 // first sort by itemId then sort by time, sort by item is descending because it's better to have recent data on top
 @CompoundIndexes({@CompoundIndex(name = "itemId_partitionKey_time", def = "{'itemId' : 1, partitionKey : -1, 'time' : -1}")})

@@ -7,6 +7,9 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
+/**
+ * @since 2022-05-27
+ */
 public interface ItemHistoryBooleanWeekRepository extends MongoRepository<ItemHistoryBooleanWeek, String> {
     List<ItemHistoryBooleanWeek> findAllByTimeBefore(DateTime time);
 }

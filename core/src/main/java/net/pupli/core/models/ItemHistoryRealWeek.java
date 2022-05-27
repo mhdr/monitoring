@@ -6,7 +6,9 @@ import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-
+/**
+ * @since 2022-05-27
+ */
 @Document(collection = "items_history_real_week")
 // use this collection for caching items for a week
 // first sort by itemId then sort by time, sort by item is descending because it's better to have recent data on top
