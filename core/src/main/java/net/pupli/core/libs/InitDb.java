@@ -93,4 +93,21 @@ public class InitDb {
 
         MyContext.alarmStatusRealRepository.saveAll(dataList);
     }
+
+    public void initAlarmStatusBoolean() {
+        var dataList = MyContext.alarmStatusBooleanRepository.findAll();
+        var alarms = MyContext.alarmBooleanRepository.findAll();
+
+        alarms.forEach(alarmReal -> {
+
+            var alarmStatus = dataList.stream().filter(x -> Objects.equals(x.getAlarmId(), alarmReal.getId())).findFirst();
+
+            if (alarmStatus.isEmpty()) {
+                var alarmStatusValue = new AlarmStatusBoolean(alarmReal.getId());
+                dataList.add(alarmStatusValue);
+            }
+        });
+
+        MyContext.alarmStatusBooleanRepository.saveAll(dataList);
+    }
 }

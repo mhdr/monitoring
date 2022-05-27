@@ -164,6 +164,7 @@ public class AlarmBoolean {
         private int value;
 
         public TimeoutProperties() {
+            this.value = 60;
         }
 
         public TimeoutProperties(int value) {

@@ -14,7 +14,7 @@ public class CoreApplication {
         SpringApplication.run(CoreApplication.class, args);
 
         //Test test = new Test();
-        //test.insertAlarmReal();
+        //test.insertAlarmBoolean();
     }
 
 }

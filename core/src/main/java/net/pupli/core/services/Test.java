@@ -2,6 +2,7 @@ package net.pupli.core.services;
 
 import net.pupli.core.configs.AppConfig;
 import net.pupli.core.libs.MyContext;
+import net.pupli.core.models.AlarmBoolean;
 import net.pupli.core.models.AlarmReal;
 import net.pupli.core.models.InterfaceCredential;
 import net.pupli.core.models.MonitoringItem;
@@ -18,6 +19,23 @@ public class Test {
         myCache = context.getBean(MyCache.class);
     }
 
+    public void insertAlarmBoolean() {
+        AlarmBoolean alarmBoolean1 = new AlarmBoolean(1);
+        alarmBoolean1.setItemId("624dec29b0cda5494a8eba8c");
+        alarmBoolean1.setMessage("Data has Alarm");
+        AlarmBoolean.CompareProperties compareProperties = new AlarmBoolean.CompareProperties(1, 1, null, 10);
+        alarmBoolean1.setCompareProps(compareProperties);
+
+        AlarmBoolean alarmBoolean2 = new AlarmBoolean(2);
+        alarmBoolean2.setItemId("624dec29b0cda5494a8eba8c");
+        alarmBoolean2.setMessage("Timeout reading");
+        AlarmBoolean.TimeoutProperties timeoutProperties = new AlarmBoolean.TimeoutProperties(60);
+        alarmBoolean2.setTimeoutProps(timeoutProperties);
+
+        MyContext.alarmBooleanRepository.insert(alarmBoolean1);
+        MyContext.alarmBooleanRepository.insert(alarmBoolean2);
+    }
+
     public void insertAlarmReal() {
         AlarmReal alarmReal1 = new AlarmReal(1);
         alarmReal1.setItemId("6245c866996098751ac96b46");
@@ -28,7 +46,7 @@ public class Test {
         AlarmReal alarmReal2 = new AlarmReal(2);
         alarmReal2.setItemId("6245c866996098751ac96b46");
         alarmReal2.setMessage("Timeout reading CPU Usage");
-        AlarmReal.TimeoutProperties timeoutProperties = new AlarmReal.TimeoutProperties();
+        AlarmReal.TimeoutProperties timeoutProperties = new AlarmReal.TimeoutProperties(60);
         alarmReal2.setTimeoutProps(timeoutProperties);
 
         MyContext.alarmRealRepository.insert(alarmReal1);
