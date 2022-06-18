@@ -1,11 +1,14 @@
 import React from 'react';
-import classNames from "classnames";
+import Button from "@mui/material/Button";
 
 function App() {
+
+    const handleButton=()=>{
+        console.log("Button Clicked");
+    }
+
     return (
-        <div className={classNames("container", "mx-auto","px-4", "bg-red-300")}>
-            Hello World
-        </div>
+        <Button variant="contained" onClick={handleButton}>Hello World</Button>
     );
 }
 
