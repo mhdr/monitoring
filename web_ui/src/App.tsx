@@ -6,17 +6,26 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
 import Typography from '@mui/material/Typography';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import {Collapse} from "@mui/material";
+import {ExpandLess, ExpandMore, StarBorder} from "@mui/icons-material";
+import HomeIcon from '@mui/icons-material/Home';
+import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
+import HistoryIcon from '@mui/icons-material/History';
 
 const drawerWidth = 240;
 
 function App() {
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClick = () => {
+        setOpen(!open);
+    };
+
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
@@ -37,30 +46,46 @@ function App() {
             >
                 <Toolbar />
                 <Box sx={{ overflow: 'auto' }}>
-                    <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
+                    <List
+                        sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                        component="nav"
+                        aria-labelledby="nested-list-subheader"
+                    >
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <HomeIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Home" />
+                        </ListItemButton>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <NotificationsActiveIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Alarms" />
+                        </ListItemButton>
+                        <ListItemButton>
+                            <ListItemIcon>
+                                <HistoryIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="History" />
+                        </ListItemButton>
+                        <ListItemButton onClick={handleClick}>
+                            <ListItemIcon>
+                                <InboxIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Inbox" />
+                            {open ? <ExpandLess /> : <ExpandMore />}
+                        </ListItemButton>
+                        <Collapse in={open} timeout="auto" unmountOnExit>
+                            <List component="div" disablePadding>
+                                <ListItemButton sx={{ pl: 4 }}>
                                     <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                                        <StarBorder />
                                     </ListItemIcon>
-                                    <ListItemText primary={text} />
+                                    <ListItemText primary="Starred" />
                                 </ListItemButton>
-                            </ListItem>
-                        ))}
-                    </List>
-                    <Divider />
-                    <List>
-                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem key={text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                                    </ListItemIcon>
-                                    <ListItemText primary={text} />
-                                </ListItemButton>
-                            </ListItem>
-                        ))}
+                            </List>
+                        </Collapse>
                     </List>
                 </Box>
             </Drawer>
